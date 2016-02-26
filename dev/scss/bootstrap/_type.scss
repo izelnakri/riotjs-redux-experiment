@@ -1,0 +1,22 @@
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  margin-bottom: $line-height-computed;
+  margin-top: $line-height-computed;
+}
+
+$iz-headers-font-sizes: ($font-size-h1, $font-size-h2, $font-size-h3);
+@for $i from 1 through 3 {
+  h#{$i} {
+    @media (max-width: $screen-sm-min) {
+      font-size: nth($iz-headers-font-sizes, $i) * .70;
+    }
+  }
+}
+
+p, .p {
+  margin: 0 0 $line-height-computed;
+}

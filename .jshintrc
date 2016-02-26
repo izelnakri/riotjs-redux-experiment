@@ -1,0 +1,22 @@
+{
+  "curly": true,
+  "immed": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "boss": true,
+  "eqnull": true,
+  "undef": true,
+  "debug": true,
+  "jasmine": true,
+  "node": true,
+  "globals": {
+    "riot": true,
+    "$": true,
+    "_": false,
+    "inject": false,
+    "pending": false,
+    "//=": true
+  },
+  "-W107": true
+}
