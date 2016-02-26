@@ -8,3 +8,6 @@ jquery, or React(would need more time to reinvent to wheel for hipsters).
 
 
 iz namespace
+
+
+test the build process in a new repo

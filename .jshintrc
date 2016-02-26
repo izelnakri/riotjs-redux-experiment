@@ -11,6 +11,7 @@
   "jasmine": true,
   "node": true,
   "globals": {
+    "opts": true,
     "riot": true,
     "$": true,
     "_": false,

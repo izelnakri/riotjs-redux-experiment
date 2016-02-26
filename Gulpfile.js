@@ -4,20 +4,32 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     sass = require('gulp-sass'),
     cssMinify = require('gulp-cssnano'),
-    cssPrefix = require('gulp-autoprefixer');
+    cssPrefix = require('gulp-autoprefixer'),
+    uglify = require('gulp-uglify'),
+    jshint = require('gulp-jshint'),
+    jshintStylish = require('jshint-stylish'),
+    shell = require('gulp-shell'),
+    runSequence = require('run-sequence');
     // plumber = require('gulp-plumber'),
     // sourcemaps = require('gulp-sourcemaps'),
     // maybe add gulp notify and gulpif
-    // add rubocop pre-commit hook
 
 // for js: sourcemaps, uglify, jshint, plumber, maybe babel
-// for js: copy, requirejs, riotjs
+// for js: require, riotjs
 
-// add usage
-
+// maybe add usage:
 // maybe - dev mode assignment logic via yargs, build.js
+
+var JS_VENDORS = [
+    'dev/js/vendor/riot+compiler.js',
+    'dev/js/vendor/chart.js',
+    'dev/js/vendor/jquery.js',
+    'dev/js/vendor/bootstrap.js'
+    ],
+    COMPONENTS_PATH = 'dev/js/components/*.tag';
+
 gulp.task('scss', function () {
-    return gulp.src('app/assets/stylesheets/require.scss')
+    return gulp.src('dev/scss/application.scss')
         .pipe(sass({
             cacheLocation: 'tmp/sass',
             onError: function (errorMessage) {
@@ -26,31 +38,54 @@ gulp.task('scss', function () {
              }
         }))
         .pipe(cssPrefix())
-        .pipe(cssMinify()) // maybe: .pipe(gulpif(!devMode, cssnano()))
+        .pipe(cssMinify()) // maybe: .pipe(gulpif(!devMode, cssMinify()))
         .pipe(concat('application.css'))
-        .pipe(gulp.dest('app/assets/stylesheets'));
+        .pipe(gulp.dest('assets/css'));
 });
 
-gulp.task('js', function () {
-    // return
+gulp.task('js:vendor', function () {
+    return gulp.src(JS_VENDORS)
+        .pipe(concat('vendor.js'))
+        .pipe(gulp.dest('tmp/js'));
 });
 
-gulp.task('watch', ['scss'], function () {
-    gulp.watch('app/assets/stylesheets/**/*.scss', ['scss']);
+gulp.task('js:components', ['js:riot:sync'], function () {
+    return gulp.src('tmp/riot/components.js')
+        .pipe(concat('components.js'))
+        .pipe(gulp.dest('app/assets/javascripts'));
 });
 
-// for angularjs:
+gulp.task('js:riot:lint', function () {
+    return gulp.src(COMPONENTS_PATH)
+        .pipe(jshint.extract('auto'))
+        .pipe(jshint())
+        .pipe(jshint.reporter(jshintStylish));
+});
 
-// var nodeModules = [
-//     "node_modules/angular2/bundles/angular2-polyfills.js",
-//     "node_modules/systemjs/dist/system.src.js",
-//     "node_modules/rxjs/bundles/Rx.js",
-//     "node_modules/angular2/bundles/angular2.dev.js"
-// ]
+gulp.task('js:riot:concat', ['js:riot:lint'], function () {
+    return gulp.src(COMPONENTS_PATH)
+        .pipe(concat('components.tag'))
+        .pipe(gulp.dest('tmp/js'));
+});
 
+gulp.task('js:riot:shell', ['js:riot:concat'], function () {
+    return gulp.src('tmp/js/components.tag')
+        .pipe(shell('riot tmp/js/components.tag tmp/js/components.js --m')); // this is async
+});
 
-gulp.task('node_modules', function () {
-    return gulp.src(nodeModules)
-        .pipe(concat('/angular-bundle.js'))
-        .pipe(gulp.dest('app/assets/javascripts'))
+gulp.task('js:riot:sync', function (callback) {
+    runSequence('js:riot:shell', callback);
+});
+
+gulp.task('js:compile', ['js:vendor', 'js:components'], function () {
+    return gulp.src(['tmp/js/vendor.js', 'tmp/js/components.js', 'dev/js/app.js'])
+        .pipe(uglify())
+        .pipe(concat('application.js'))
+        .pipe(gulp.dest('assets/js'));
+});
+
+gulp.task('watch', ['scss', 'js:compile'], function () {
+    gulp.watch('dev/scss/**/*.scss', ['scss']);
+    gulp.watch(COMPONENTS_PATH, ['js:components']);
+    gulp.watch('dev/js/app.js', ['js:compile']);
 });
