@@ -12,7 +12,11 @@
   "node": true,
   "globals": {
     "opts": true,
+    "document": true,
+    "Chart": true,
     "riot": true,
+    "moment": true,
+    "store": true,
     "$": true,
     "_": false,
     "inject": false,

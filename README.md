@@ -1,13 +1,21 @@
-install npm install http-server gulp -g
+/dev is the actual development directory
 
-I did this with pure JS and RiotJS to inspire others. I could do it in angular,
-jquery, or React(would need more time to reinvent to wheel for hipsters).
+I did this in RiotJS on purpose to inspire others. JS code is very high quality.
 
-``` gulp dev ```
-``` gulp prod ```
+I didn't use a fancy flux/redux store since there is no adding/removing or no syncing data with a server
 
+I didn't use a bundler like webpack, because I like good DSLs, I know node + GulpJs and I'm not a hipster.
 
-iz namespace
+iz namespace is used. For example: <iz-rating-list />
 
+All the css is component specific, bootstrap has been used to its full power.
 
-test the build process in a new repo
+This frontend structure scales really well with a flux architecture.
+
+```npm install http-server gulp -g```
+
+```npm install```
+
+```gulp watch```
+
+```http-server```

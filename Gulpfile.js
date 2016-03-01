@@ -24,7 +24,10 @@ var JS_VENDORS = [
     'dev/js/vendor/riot+compiler.js',
     'dev/js/vendor/chart.js',
     'dev/js/vendor/jquery.js',
-    'dev/js/vendor/bootstrap.js'
+    'dev/js/vendor/bootstrap.js',
+    'dev/js/vendor/lodash.js',
+    'dev/js/vendor/moment.js',
+    'dev/js/store.js'
     ],
     COMPONENTS_PATH = 'dev/js/components/*.tag';
 
@@ -50,7 +53,7 @@ gulp.task('js:vendor', function () {
 });
 
 gulp.task('js:components', ['js:riot:sync'], function () {
-    return gulp.src('tmp/riot/components.js')
+    return gulp.src('tmp/js/components.js')
         .pipe(concat('components.js'))
         .pipe(gulp.dest('app/assets/javascripts'));
 });
@@ -86,6 +89,6 @@ gulp.task('js:compile', ['js:vendor', 'js:components'], function () {
 
 gulp.task('watch', ['scss', 'js:compile'], function () {
     gulp.watch('dev/scss/**/*.scss', ['scss']);
-    gulp.watch(COMPONENTS_PATH, ['js:components']);
+    gulp.watch(COMPONENTS_PATH, ['js:compile']);
     gulp.watch('dev/js/app.js', ['js:compile']);
 });

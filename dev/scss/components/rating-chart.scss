@@ -1,0 +1,12 @@
+iz-rating-chart {
+    canvas {
+        width: 100%;
+        display: block;
+        &.hidden-xs {
+            height: 300px;
+        }
+        &.hidden-sm {
+            height: 150px;
+        }
+    }
+}

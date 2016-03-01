@@ -1,0 +1,23 @@
+iz-rating-list {
+    table {
+        border-color: #465056;
+        thead {
+            background: #465056;
+            color: white;
+        }
+    }
+
+    iz-circle {
+        display: inline-block;
+        padding: 8px 13px;
+        border-radius: 30px;
+        border: 2px solid $brand-primary;
+        margin: 0 10px 10px 0;
+        background: $brand-primary;
+        color: white;
+        &.iz-toggled {
+            color: $brand-primary;
+            background: white;
+        }
+    }
+}

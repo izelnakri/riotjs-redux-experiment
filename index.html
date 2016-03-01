@@ -10,7 +10,7 @@
 
     <!-- optional: Social media tags -->
 
-    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <!-- add the other favicons here
     <link rel="apple-touch-icon" href="">
@@ -21,6 +21,29 @@
     <link rel=stylesheet media=all href="/assets/css/application.css">
   </head>
   <body>
+    <section class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- panel -->
+                <div class="well">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <iz-rating-overview-table>
+                            </iz-rating-overview-table>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <iz-rating-chart>
+                            </iz-rating-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <iz-rating-list>
+        </iz-rating-list>
+    </section>
+
     <script src="/assets/js/application.js"></script>
   </body>
 </html>
