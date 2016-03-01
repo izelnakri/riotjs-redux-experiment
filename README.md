@@ -10,7 +10,7 @@ iz namespace is used. For example: ``` <iz-rating-list /> ```
 
 All the css is component specific, bootstrap has been used to its full power.
 
-This frontend structure scales really well with a flux architecture. (also RiotJS has a built-in EventEmitter called)
+This frontend structure goes well with a flux architecture. (RiotJS has a built-in EventEmitter)
 
 ``` npm install http-server gulp -g ```
 
