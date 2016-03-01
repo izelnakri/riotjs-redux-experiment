@@ -15,6 +15,7 @@ iz-rating-list {
         margin: 0 10px 10px 0;
         background: $brand-primary;
         color: white;
+        cursor: pointer;
         &.iz-toggled {
             color: $brand-primary;
             background: white;
