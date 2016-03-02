@@ -1,8 +1,8 @@
 <iz-rating-list>
     <div class="row">
-        <div class="col-xs-12">
+        <iz-rating-list-filters class="col-xs-12">
             <iz-circle each={number in [1,2,3,4,5]} onclick={parent.toggleRating}>{number}</iz-circle>
-        </div>
+        </iz-rating-list-filters>
     </div>
 
     <div class="row">

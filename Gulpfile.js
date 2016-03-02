@@ -9,7 +9,10 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     jshintStylish = require('jshint-stylish'),
     shell = require('gulp-shell'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
+    Server = require('karma').Server,
+    runMocha = require('gulp-mocha');
+
     // plumber = require('gulp-plumber'),
     // sourcemaps = require('gulp-sourcemaps'),
     // maybe add gulp notify and gulpif
@@ -85,6 +88,21 @@ gulp.task('js:compile', ['js:vendor', 'js:components'], function () {
         .pipe(uglify())
         .pipe(concat('application.js'))
         .pipe(gulp.dest('assets/js'));
+});
+
+gulp.task('test:once', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('test:watch', function (done) {
+  // new Server({
+  //   configFile: __dirname + '/karma.conf.js'
+  // }, done).start();
+  return gulp.src('test/**/*.js', {read: false})
+            .pipe(runMocha({reporter: 'spec', timeout: 15000 }));
 });
 
 gulp.task('watch', ['scss', 'js:compile'], function () {

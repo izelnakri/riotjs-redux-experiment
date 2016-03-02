@@ -8,8 +8,9 @@
   "eqnull": true,
   "undef": true,
   "debug": true,
-  "jasmine": true,
   "node": true,
+  "esversion": 6,
+  "mocha": true,
   "globals": {
     "opts": true,
     "document": true,
