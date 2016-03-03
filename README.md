@@ -19,3 +19,15 @@ This frontend structure goes well with a flux architecture. (RiotJS has a built-
 ``` gulp watch ```
 
 ``` http-server ```
+
+some other things I might do in future:
+- form validations
+- navigation
+- store changes
+- multiple data set integration
+- form generation from js
+- tests
+- async load order
+- real-time comm.
+- error reporting
+- debugging
