@@ -24,10 +24,11 @@ some other things I might do in future:
 - form validations
 - navigation
 - store changes
-- multiple data set integration
+- multiple data set req integration from a server
 - form generation from js
 - tests
 - async load order
 - real-time comm.
 - error reporting
 - debugging
+- Object observer
