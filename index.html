@@ -21,29 +21,11 @@
     <link rel=stylesheet media=all href="/assets/css/application.css">
   </head>
   <body>
-    <section class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- panel -->
-                <div class="well">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <iz-rating-overview-table>
-                            </iz-rating-overview-table>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 col-md-9">
-                            <iz-rating-chart>
-                            </iz-rating-chart>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <iz-header></iz-header>
 
-        <iz-rating-list>
-        </iz-rating-list>
-    </section>
+    <page></page>
 
     <script src="/assets/js/application.js"></script>
+    <!-- vendor, components, pages async load -->
   </body>
 </html>

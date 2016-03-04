@@ -32,7 +32,8 @@ var JS_VENDORS = [
     'dev/js/vendor/moment.js',
     'dev/js/store.js'
     ],
-    COMPONENTS_PATH = 'dev/js/components/*.tag';
+    COMPONENTS_PATH = 'dev/js/components/*.tag',
+    PAGES_PATH = 'dev/js/pages/*.tag';
 
 gulp.task('scss', function () {
     return gulp.src('dev/scss/application.scss')
@@ -55,36 +56,52 @@ gulp.task('js:vendor', function () {
         .pipe(gulp.dest('tmp/js'));
 });
 
-gulp.task('js:components', ['js:riot:sync'], function () {
-    return gulp.src('tmp/js/components.js')
-        .pipe(concat('components.js'))
-        .pipe(gulp.dest('app/assets/javascripts'));
-});
-
-gulp.task('js:riot:lint', function () {
+gulp.task('js:components:lint', function () {
     return gulp.src(COMPONENTS_PATH)
         .pipe(jshint.extract('auto'))
         .pipe(jshint())
         .pipe(jshint.reporter(jshintStylish));
 });
 
-gulp.task('js:riot:concat', ['js:riot:lint'], function () {
+gulp.task('js:components:concat', ['js:components:lint'], function () {
     return gulp.src(COMPONENTS_PATH)
         .pipe(concat('components.tag'))
         .pipe(gulp.dest('tmp/js'));
 });
 
-gulp.task('js:riot:shell', ['js:riot:concat'], function () {
+gulp.task('js:components:shell', ['js:components:concat'], function () {
     return gulp.src('tmp/js/components.tag')
         .pipe(shell('riot tmp/js/components.tag tmp/js/components.js --m')); // this is async
 });
 
-gulp.task('js:riot:sync', function (callback) {
-    runSequence('js:riot:shell', callback);
+gulp.task('js:components', function (callback) {
+    runSequence('js:components:shell', callback);
 });
 
-gulp.task('js:compile', ['js:vendor', 'js:components'], function () {
-    return gulp.src(['tmp/js/vendor.js', 'tmp/js/components.js', 'dev/js/app.js'])
+gulp.task('js:pages:lint', function () {
+    return gulp.src(PAGES_PATH)
+        .pipe(jshint.extract('auto'))
+        .pipe(jshint())
+        .pipe(jshint.reporter(jshintStylish));
+});
+
+gulp.task('js:pages:concat', ['js:pages:lint'], function () {
+    return gulp.src(PAGES_PATH)
+        .pipe(concat('pages.tag'))
+        .pipe(gulp.dest('tmp/js'));
+});
+
+gulp.task('js:pages:shell', ['js:pages:concat'], function () {
+    return gulp.src('tmp/js/pages.tag')
+        .pipe(shell('riot tmp/js/pages.tag tmp/js/pages.js --m')); // this is async
+});
+
+gulp.task('js:pages', function (callback) {
+    runSequence('js:pages:shell', callback);
+});
+
+gulp.task('js:compile', ['js:vendor', 'js:components', 'js:pages'], function () {
+    return gulp.src([ 'tmp/js/vendor.js', 'tmp/js/components.js', 'tmp/js/pages.js', 'dev/js/app.js'])
         .pipe(uglify())
         .pipe(concat('application.js'))
         .pipe(gulp.dest('assets/js'));
@@ -97,16 +114,14 @@ gulp.task('test:once', function (done) {
   }, done).start();
 });
 
-gulp.task('test:watch', function (done) {
-  // new Server({
-  //   configFile: __dirname + '/karma.conf.js'
-  // }, done).start();
-  return gulp.src('test/**/*.js', {read: false})
+gulp.task('test:components', function (done) {
+  return gulp.src('test/**/*.js', {read: false}) // add mocha config for requires
             .pipe(runMocha({reporter: 'spec', timeout: 15000 }));
 });
 
 gulp.task('watch', ['scss', 'js:compile'], function () {
     gulp.watch('dev/scss/**/*.scss', ['scss']);
     gulp.watch(COMPONENTS_PATH, ['js:compile']);
+    gulp.watch(PAGES_PATH, ['js:compile']);
     gulp.watch('dev/js/app.js', ['js:compile']);
 });

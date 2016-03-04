@@ -12,17 +12,16 @@ All the css is component specific, bootstrap has been used to its full power.
 
 This frontend structure goes well with a flux architecture. (RiotJS has a built-in EventEmitter)
 
-``` npm install http-server gulp -g ```
+``` npm install http-server gulp riot -g ```
 
 ``` npm install ```
 
 ``` gulp watch ```
 
-``` http-server ```
+``` node index.js ```
 
 some other things I might do in future:
 - form validations
-- navigation
 - store changes
 - multiple data set req integration from a server
 - form generation from js
@@ -32,3 +31,6 @@ some other things I might do in future:
 - error reporting
 - debugging
 - Object observer
+- isomorphic example(needs backend rendering engine)
+
+maybe turn /pages into /apps
