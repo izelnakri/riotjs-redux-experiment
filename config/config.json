@@ -1,0 +1,20 @@
+{
+  "development": {
+    "password": null,
+    "database": "riotjs_example",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "password": null,
+    "database": "riotjs_example_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

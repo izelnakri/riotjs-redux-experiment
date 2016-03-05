@@ -107,17 +107,24 @@ gulp.task('js:compile', ['js:vendor', 'js:components', 'js:pages'], function () 
         .pipe(gulp.dest('assets/js'));
 });
 
-gulp.task('test:once', function (done) {
-  new Server({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, done).start();
+gulp.task('test:components', function () {
+    return gulp.src('test/components/*.js', {read: false}) // add mocha config for requires
+        .pipe(runMocha({reporter: 'spec', timeout: 15000 }));
 });
 
-gulp.task('test:components', function (done) {
-  return gulp.src('test/**/*.js', {read: false}) // add mocha config for requires
-            .pipe(runMocha({reporter: 'spec', timeout: 15000 }));
+gulp.task('test:unit', function () {
+    process.env.NODE_ENV = 'test';
+
+    return gulp.src('test/unit/*.js', {read: false})
+            .pipe(runMocha({reporter: 'spec', timeout: 10000 }));
 });
+
+// gulp.task('test:once', function (done) {
+//   new Server({
+//     configFile: __dirname + '/karma.conf.js',
+//     singleRun: true
+//   }, done).start();
+// });
 
 gulp.task('watch', ['scss', 'js:compile'], function () {
     gulp.watch('dev/scss/**/*.scss', ['scss']);

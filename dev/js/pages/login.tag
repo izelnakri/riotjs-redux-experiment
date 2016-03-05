@@ -1,11 +1,11 @@
 <page-login>
     <section class="iz-page-container">
         <div class="row">
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-xs-12 col-sm-5 col-md-6">
                 <h2 class="hidden-xs">Login</h2>
             </div>
 
-            <div class="col-sm-4 col-sm-offset-2 col-xs-12">
+            <div class="col-xs-12 col-sm-5 col-sm-offset-2 col-md-4 col-md-offset-2">
                 <div class="well">
                     <h4>Login</h4>
                     <hr />

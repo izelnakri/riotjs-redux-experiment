@@ -12,13 +12,26 @@ All the css is component specific, bootstrap has been used to its full power.
 
 This frontend structure goes well with a flux architecture. (RiotJS has a built-in EventEmitter)
 
-``` npm install http-server gulp riot -g ```
+- ``` npm install http-server gulp riot sequelize-cli -g ```
 
-``` npm install ```
+- ``` npm install ```
+
+Create the models:
+
+- ``` createdb riotjs_example ```
+
+- ``` sequelize db:migrate  ```
 
 ``` gulp watch ```
 
-``` node index.js ```
+``` node server.js ```
+
+FOR UNIT TESTS:
+
+- ``` createdb riotjs_example_test ```
+- ``` sequelize db:migrate --env=test ```
+
+STATUS: Writing unit tests for has_many_password implementation for a User model in Node.js (sequelize model)
 
 some other things I might do in future:
 - form validations
