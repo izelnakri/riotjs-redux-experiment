@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.5",
+    "colors": "^1.1.2",
     "express": "^4.13.4",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",

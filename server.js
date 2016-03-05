@@ -5,9 +5,7 @@ var express = require('express'),
     morgan = require('morgan'),
     models = require('./models');
 
-// TODO: has_many_password functionality, maybe write a isomorphic rendering example
-// password can't be blank if there is digest, max length = 72, pass
-// password_confirmation
+// TODO: write tests for has_many_password, maybe write a isomorphic rendering example
 
 Object.keys(models).forEach(function(model) {
     if (model !== 'Sequelize' || model !== 'sequelize') {
@@ -15,11 +13,14 @@ Object.keys(models).forEach(function(model) {
     }
 });
 
-app.use('/assets', express.static('assets'));
-// app.use('/views', express.static('views'));
 app.use('/', express.static('public'));
+// app.use('/views', express.static('views'));
 
-app.use(morgan('combined'));
+if (process.env['NODE_ENV'] === 'production') {
+    app.use(morgan('combined'));
+} else {
+    app.use(morgan('dev'));
+}
 
 app.get('/data.json', function (req, res) {
     res.sendFile(__dirname + '/data.json');
