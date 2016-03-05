@@ -1,5 +1,5 @@
 <page-index>
-    <section class="container" style="padding-top: 51px;padding-bottom: 51px;">
+    <section class="iz-page-container">
         <div class="row">
             <div class="col-xs-12">
                 <!-- panel -->
