@@ -24,19 +24,19 @@ var gulp = require('gulp'),
 // maybe - dev mode assignment logic via yargs, build.js
 
 var JS_VENDORS = [
-    'dev/js/vendor/riot+compiler.js',
-    'dev/js/vendor/chart.js',
-    'dev/js/vendor/jquery.js',
-    'dev/js/vendor/bootstrap.js',
-    'dev/js/vendor/lodash.js',
-    'dev/js/vendor/moment.js',
-    'dev/js/store.js'
+    'frontend/js/vendor/riot+compiler.js',
+    'frontend/js/vendor/chart.js',
+    'frontend/js/vendor/jquery.js',
+    'frontend/js/vendor/bootstrap.js',
+    'frontend/js/vendor/lodash.js',
+    'frontend/js/vendor/moment.js',
+    'frontend/js/store.js'
     ],
-    COMPONENTS_PATH = 'dev/js/components/*.tag',
-    PAGES_PATH = 'dev/js/pages/*.tag';
+    COMPONENTS_PATH = 'frontend/js/components/*.tag',
+    PAGES_PATH = 'frontend/js/pages/*.tag';
 
 gulp.task('scss', function () {
-    return gulp.src('dev/scss/application.scss')
+    return gulp.src('frontend/scss/application.scss')
         .pipe(sass({
             cacheLocation: 'tmp/sass',
             onError: function (errorMessage) {
@@ -47,7 +47,7 @@ gulp.task('scss', function () {
         .pipe(cssPrefix())
         .pipe(cssMinify()) // maybe: .pipe(gulpif(!devMode, cssMinify()))
         .pipe(concat('application.css'))
-        .pipe(gulp.dest('assets/css'));
+        .pipe(gulp.dest('public/css'));
 });
 
 gulp.task('js:vendor', function () {
@@ -101,10 +101,10 @@ gulp.task('js:pages', function (callback) {
 });
 
 gulp.task('js:compile', ['js:vendor', 'js:components', 'js:pages'], function () {
-    return gulp.src([ 'tmp/js/vendor.js', 'tmp/js/components.js', 'tmp/js/pages.js', 'dev/js/app.js'])
+    return gulp.src([ 'tmp/js/vendor.js', 'tmp/js/components.js', 'tmp/js/pages.js', 'frontend/js/app.js'])
         .pipe(uglify())
         .pipe(concat('application.js'))
-        .pipe(gulp.dest('assets/js'));
+        .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('test:components', function () {
@@ -127,8 +127,8 @@ gulp.task('test:unit', function () {
 // });
 
 gulp.task('watch', ['scss', 'js:compile'], function () {
-    gulp.watch('dev/scss/**/*.scss', ['scss']);
+    gulp.watch('frontend/scss/**/*.scss', ['scss']);
     gulp.watch(COMPONENTS_PATH, ['js:compile']);
     gulp.watch(PAGES_PATH, ['js:compile']);
-    gulp.watch('dev/js/app.js', ['js:compile']);
+    gulp.watch('frontend/js/app.js', ['js:compile']);
 });

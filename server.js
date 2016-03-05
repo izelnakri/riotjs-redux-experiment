@@ -3,13 +3,11 @@
 var express = require('express'),
     app = express(),
     morgan = require('morgan'),
-    bcrypt = require('bcrypt'),
     models = require('./models');
 
 // TODO: has_many_password functionality, maybe write a isomorphic rendering example
 // password can't be blank if there is digest, max length = 72, pass
 // password_confirmation
-
 
 Object.keys(models).forEach(function(model) {
     if (model !== 'Sequelize' || model !== 'sequelize') {
@@ -18,9 +16,10 @@ Object.keys(models).forEach(function(model) {
 });
 
 app.use('/assets', express.static('assets'));
-app.use(morgan('combined'));
-
 // app.use('/views', express.static('views'));
+app.use('/', express.static('public'));
+
+app.use(morgan('combined'));
 
 app.get('/data.json', function (req, res) {
     res.sendFile(__dirname + '/data.json');
@@ -28,12 +27,12 @@ app.get('/data.json', function (req, res) {
 
 app.post('/register', function (req, res) {
     // req.params
-    
+    // bcrypt.genSalt(10, function(err, salt) {
+    //     bcrypt.hash('B4c0/\/', salt, function(err, hash) {
+    //         // Store hash in your password DB.
+    //     });
+    // });
 });
-
-// app.get('/views/*', function (req, res) {
-//     res.sendFile(__dirname + '/views' + req.params[0]);
-// });
 
 app.get('*', function (req, res) {
     res.sendFile(__dirname + '/index.html');

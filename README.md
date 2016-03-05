@@ -1,4 +1,4 @@
-/dev is the actual development directory
+/frontend is the actual frontend directory
 
 I did this in RiotJS on purpose to inspire others. JS code is very high quality.
 
