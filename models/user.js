@@ -12,18 +12,18 @@ module.exports = function(sequelize, DataTypes) {
         },
         password: {
             type: DataTypes.VIRTUAL,
-            set: function (password) {
+            set: (password) => {
                 var self = this;
 
                 self.setDataValue('password', password);
-                bcrypt.genSalt(function(err, salt) {
-                    bcrypt.hash(password, salt, function(err, hash) {
+                bcrypt.genSalt((err, salt) => {
+                    bcrypt.hash(password, salt, (err, hash) => {
                         self.setDataValue('password_digest', hash);
                     });
                 });
             },
             validate: {
-                isLongEnough: function (val) {
+                isLongEnough: (val) => {
                     if (val.length < 7) {
                         throw new Error("Please choose a longer password");
                     }
@@ -51,7 +51,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         full_name: { // UNIT TEST THIS ATTRIBUTE + INTERACTION
             type: DataTypes.VIRTUAL,
-            get: function () {
+            get: () => {
                 if (this.first_name) {
                     if (this.last_name) {
                         return this.first_name + ' ' + this.last_name;
@@ -59,7 +59,7 @@ module.exports = function(sequelize, DataTypes) {
                     return this.first_name;
                 }
             },
-            set: function (full_name) {
+            set: (full_name) => {
                 if (_.isString(full_name) && full_name.length > 1) {
                     var names = full_name.trim().split(' ');
 
@@ -73,7 +73,7 @@ module.exports = function(sequelize, DataTypes) {
         username: {
             type: DataTypes.STRING,
             unique: true,
-            set: function () {
+            set: () => {
                 // complicated App-slug uniqueness lookup here
             }
         },
@@ -82,7 +82,7 @@ module.exports = function(sequelize, DataTypes) {
         used_android_app: DataTypes.BOOLEAN
       }, {
         hooks: {
-            beforeCreate: function(user, options) {
+            beforeCreate: (user, options) => {
                 if (!user.password) {
                     return sequelize.Promise.reject("Password can't be blank");
                 }
@@ -92,18 +92,18 @@ module.exports = function(sequelize, DataTypes) {
             // }
         },
         classMethods: {
-            associate: function(models) {
+            associate: (models) => {
                 // associations can be defined here
             }
         },
         instanceMethods: {
-            authenticate: function (password) {
+            authenticate: (password) => {
                 return bcrypt.compareSync(password, this.password_digest);
             },
-            generatePasswordResetToken: function () {
+            generatePasswordResetToken: () => {
                  this.password_reset_token = base64url(crypto.randomBytes(48));
             },
-            generateAuthenticationToken: function () {
+            generateAuthenticationToken: () => {
                 this.authentication_token = crypto.randomBytes(64);
             }
         }

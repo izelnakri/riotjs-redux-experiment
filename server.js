@@ -1,16 +1,12 @@
 'use strict';
 
+require('./models');
+
 var express = require('express'),
     app = express(),
     morgan = require('morgan'),
-    models = require('./models'),
     html = require('./routes'),
     api = require('./routes/api');
-
-// TODO: write tests for has_many_password, maybe write a isomorphic rendering example
-Object.keys(models).forEach(function(model) {
-    global[model] = models[model];
-});
 
 if (process.env['NODE_ENV'] === 'production') {
     app.use(morgan('combined'));
@@ -21,10 +17,10 @@ if (process.env['NODE_ENV'] === 'production') {
 app.use('/', html);
 app.use('/api', api);
 
-app.get('*', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
 });
 
-app.listen(3000, function () {
+app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });

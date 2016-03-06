@@ -31,7 +31,7 @@ FOR UNIT TESTS:
 - ``` createdb riotjs_example_test ```
 - ``` sequelize db:migrate --env=test ```
 
-STATUS: Writing unit tests for has_many_password implementation for a User model in Node.js (sequelize model)
+STATUS: Writing unit tests for has_password implementation for a User model in Node.js (sequelize model)
 
 some other things I might do in future:
 - form validations
