@@ -57,7 +57,7 @@ App.load = function () {
 
 var store = {};
 
-$.getJSON('/data.json').then(function (data) {
+$.getJSON('/api/data.json').then(function (data) {
     store = data;
     riot.mount('*');
     App.load();

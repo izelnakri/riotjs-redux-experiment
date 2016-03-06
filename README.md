@@ -38,6 +38,7 @@ some other things I might do in future:
 - store changes
 - multiple data set req integration from a server
 - form generation from js
+- front-end copy + expression read
 - tests
 - async load order
 - real-time comm.
