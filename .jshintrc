@@ -20,6 +20,8 @@
     "store": true,
     "$": true,
     "_": false,
+    "User": true,
+    "sequelize": true,
     "inject": false,
     "pending": false,
     "//=": true

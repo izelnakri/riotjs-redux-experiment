@@ -1,8 +1,8 @@
 'use strict';
 require('./models');
 
-var repl = require('repl'),
-    _ = require('lodash');
+var _ = require('lodash'),
+    repl = require('repl'),
+    Repl = repl.start('> ');
 
-var Repl = repl.start('> ');
 Repl.context._ = _;

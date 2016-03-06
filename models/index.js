@@ -33,3 +33,5 @@ db.Sequelize = Sequelize;
 Object.keys(db).forEach((model) => {
     global[model] = db[model];
 });
+
+// module.exports = db;

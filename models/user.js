@@ -8,34 +8,34 @@ module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define('User', {
         email: {
             type: DataTypes.STRING,
+            unique: true,
             validate: { isEmail: true }
         },
         password: {
             type: DataTypes.VIRTUAL,
-            set: (password) => {
-                var self = this;
-
-                self.setDataValue('password', password);
-                bcrypt.genSalt((err, salt) => {
-                    bcrypt.hash(password, salt, (err, hash) => {
-                        self.setDataValue('password_digest', hash);
-                    });
-                });
+            set: function (password) {
+                if (password) {
+                    var hash = bcrypt.hashSync(password, bcrypt.genSaltSync());
+                    this.setDataValue('password_digest', hash);
+                    this.setDataValue('password', password);
+                }
             },
             validate: {
                 isLongEnough: (val) => {
+                    // check if this goes to user.errors
                     if (val.length < 7) {
                         throw new Error("Please choose a longer password");
                     }
 
                     if (val.length > 72) {
-                        throw new Error("Please choose a shorter password");
+                        throw new Error("Please c hoose a shorter password");
                     }
                 }
             }
         },
         password_digest: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         password_reset_token: DataTypes.STRING,
         authentication_token: DataTypes.STRING,
@@ -51,7 +51,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         full_name: { // UNIT TEST THIS ATTRIBUTE + INTERACTION
             type: DataTypes.VIRTUAL,
-            get: () => {
+            get: function () {
                 if (this.first_name) {
                     if (this.last_name) {
                         return this.first_name + ' ' + this.last_name;
@@ -59,7 +59,7 @@ module.exports = function(sequelize, DataTypes) {
                     return this.first_name;
                 }
             },
-            set: (full_name) => {
+            set: function (full_name) {
                 if (_.isString(full_name) && full_name.length > 1) {
                     var names = full_name.trim().split(' ');
 
@@ -83,9 +83,9 @@ module.exports = function(sequelize, DataTypes) {
       }, {
         hooks: {
             beforeCreate: (user, options) => {
-                if (!user.password) {
-                    return sequelize.Promise.reject("Password can't be blank");
-                }
+                // if (!user.password) {
+                //     return sequelize.Promise.reject("Password can't be blank");
+                // }
             },
             // beforeUpdate: function(user, options) {
             //
@@ -97,14 +97,16 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         instanceMethods: {
-            authenticate: (password) => {
+            authenticate: function(password) {
                 return bcrypt.compareSync(password, this.password_digest);
             },
-            generatePasswordResetToken: () => {
+            generatePasswordResetToken: function() {
                  this.password_reset_token = base64url(crypto.randomBytes(48));
+                 return this;
             },
-            generateAuthenticationToken: () => {
+            generateAuthenticationToken: function() {
                 this.authentication_token = crypto.randomBytes(64);
+                return this;
             }
         }
     });
