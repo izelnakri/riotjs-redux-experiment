@@ -18,6 +18,10 @@ App.load = function () {
         riot.visit('contact');
     });
 
+    riot.route('/counter', function() {
+        riot.visit('counter');
+    });
+
     riot.route('/forgot-password', function() {
         riot.visit('forgot-password');
     });
@@ -67,7 +71,6 @@ $.getJSON('/api/data.json').then(function (data) {
 
 // REDUX HERE ==========================================
 //normalizr and camelCase libraries + Babel probably needed
-
 function userReducer(state, action) {
     if(!state) { state = 0; }
     switch(action.type) {
@@ -88,43 +91,29 @@ function userReducer(state, action) {
 }
 
 // TRY this below with counter and store:
+var initialState = {
+    todosVisibilityFilter: 'SHOW_ALL',
+    todos: [],
+    todo: {},
+    counter: 0
+};
 
-// var reducer = Redux.combineReducers({
-//   a: doSomethingWithA,
-//   b: processB,
-//   c: c
-// })
+function storeLogic(state, action) {
+    if (!state) {
+        state = initialState;
+    }
 
-function applicationLogic(state, action) {
-    _.defaults(state, initialState);
     return {
         user: userReducer(state.user, action),
         todos: todosReducer(state.todos, action),
         todo: todoReducer(state.todo, action),
+        counter: counterReducer(state.counter, action),
         todosVisibilityFilter: todosVisibilityFilter(state.todosVisibilityFilter, action)
     };
 }
 
-var ReduxStore = Redux.createStore(applicationLogic);
+var Store = Redux.createStore(storeLogic);
 
-ReduxStore.subscribe(function() {
-    console.log(ReduxStore.getState());
+Store.subscribe(function() {
+    console.log(Store.getState());
 });
-
-// ReduxStore.dispatch({ type: 'INCREMENT' });
-// ReduxStore.dispatch({ type: 'INCREMENT' });
-
-var initialState = {
-    visibilityFilter: 'SHOW_ALL',
-    todos: []
-};
-
-function todoApp(state, action) {
-    if (typeof state === 'undefined') {
-        return initialState;
-    }
-
-    // For now, don’t handle any actions
-    // and just return the state given to us.
-    return state;
-}

@@ -2,9 +2,11 @@
 
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
+    sourcemaps = require('gulp-sourcemaps'),
     sass = require('gulp-sass'),
     cssMinify = require('gulp-cssnano'),
     cssPrefix = require('gulp-autoprefixer'),
+    babel = require('gulp-babel'),
     uglify = require('gulp-uglify'),
     jshint = require('gulp-jshint'),
     jshintStylish = require('jshint-stylish'),
@@ -32,6 +34,10 @@ var JS_VENDORS = [
     'frontend/js/vendor/lodash.js',
     'frontend/js/vendor/moment.js'
     ],
+    CONSTANTS_PATH = 'frontend/js/constants/*.js',
+    ACTIONS_PATH = 'frontend/js/actions/*.js',
+    REDUCERS_PATH = 'frontend/js/reducers/*.js',
+    API_PATH = 'frontend/js/api/*.js',
     COMPONENTS_PATH = 'frontend/js/components/*.tag',
     PAGES_PATH = 'frontend/js/pages/*.tag';
 
@@ -108,8 +114,21 @@ gulp.task('js:pages', function (callback) {
     runSequence('js:pages:shell', callback);
 });
 
-gulp.task('js:compile', ['js:vendor', 'js:components', 'js:pages'], function () {
-    return gulp.src([ 'tmp/js/vendor.js', 'tmp/js/components.js', 'tmp/js/pages.js', 'frontend/js/app.js'])
+gulp.task('js:redux', function () {
+    return gulp.src([CONSTANTS_PATH, ACTIONS_PATH, REDUCERS_PATH, API_PATH])
+        .pipe(sourcemaps.init())
+        .pipe(babel())
+        .pipe(uglify())
+        .pipe(concat('store.js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('tmp/js'));
+});
+
+gulp.task('js:compile', ['js:vendor', 'js:redux', 'js:components', 'js:pages'], function () {
+    return gulp.src([
+        'tmp/js/vendor.js', 'tmp/js/store.js','tmp/js/components.js',
+        'tmp/js/pages.js', 'frontend/js/app.js'
+        ])
         .pipe(uglify())
         .pipe(concat('application.js'))
         .pipe(gulp.dest('public/js'));
@@ -138,5 +157,9 @@ gulp.task('watch', ['scss', 'js:compile'], function () {
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
     gulp.watch(COMPONENTS_PATH, ['js:compile']);
     gulp.watch(PAGES_PATH, ['js:compile']);
+    gulp.watch(CONSTANTS_PATH, ['js:compile']);
+    gulp.watch(ACTIONS_PATH, ['js:compile']);
+    gulp.watch(REDUCERS_PATH, ['js:compile']);
+    gulp.watch(API_PATH, ['js:compile']);
     gulp.watch('frontend/js/app.js', ['js:compile']);
 });

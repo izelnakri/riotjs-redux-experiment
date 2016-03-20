@@ -5,20 +5,20 @@ var addTodo = function(text) {
     return {
         type: 'ADD_TODO',
         id: nextTodoId++,
-        text // maybe this is text: text
+        text: text
     };
 };
 
 var setVisibilityFilter = function(filter) {
     return {
         type: 'SET_VISIBILITY_FILTER',
-        filter
+        filter: filter
     };
 };
 
 var toggleTodo = function(id) {
     return {
         type: 'TOGGLE_TODO',
-        id
+        id: id
     };
 };

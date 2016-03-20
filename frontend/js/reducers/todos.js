@@ -1,4 +1,5 @@
 // import undoable, { distinctState } from 'redux-undo'
+
 var todoReducer = function(state, action) {
     switch (action.type) {
     case 'ADD_TODO':
@@ -12,9 +13,9 @@ var todoReducer = function(state, action) {
             return state;
         }
 
-        return Object.assign({}, state, {
+        return _.assign({}, state, {
             completed: !state.completed
-        }); // this is ES6
+        }); // Object.assign is ES6
     default:
         return state;
     }
