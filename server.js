@@ -28,7 +28,7 @@ app.use('/', html);
 app.use('/api', api);
 
 app.get('*', (req, res) => {
-    res.render('layout', { page: riot.render(views['index']) });
+    res.render('layout');
     // res.sendFile(__dirname + '/public/index.html');
 });
 

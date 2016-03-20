@@ -1,8 +1,6 @@
 Status: isomorphic RiotJS example is done, testing Redux with RiotJS(still in progress)
 
-I did this in RiotJS on purpose to inspire others. JS code is very high quality.
-
-I didn't use a fancy flux/redux store since there is no adding/removing or no syncing data with a server
+I did this in RiotJS on purpose to inspire others. JS code is high quality.
 
 I didn't use a bundler like webpack, because I like good DSLs, I know node + GulpJs and I'm not a hipster.
 
@@ -12,7 +10,7 @@ All the css is component specific, bootstrap has been used to its full power.
 
 This frontend structure goes well with a flux architecture. (RiotJS has a built-in EventEmitter)
 
-- ``` npm install http-server gulp riot sequelize-cli -g ```
+- ``` npm install gulp riot sequelize-cli babel-cli jspm -g ```
 
 - ``` npm install ```
 
@@ -24,20 +22,23 @@ Create the models:
 
 ``` gulp watch ```
 
-``` node server.js ```
+``` babel-node server.js ```
 
 FOR UNIT TESTS:
 - ``` createdb riotjs_example_test ```
 - ``` sequelize db:migrate --env=test ```
 
-
-TODO: write TodoList with mapStateToProps for riot tags, action-dispatch routine
+TODO:
+- move jspm config.js
+- try node with jspm instead of babel-node
+- nodemon to restart process on every change
 - make sourcemaps work for js + css
 - make Object.assign + optional parameters work with Babel
-- add ES6 modules
 - optimize the gulp build process
 - maybe add 'selectors' for Redux
-- namespace reducers and actions
+
+
+jspm install npm:lodash, npm:jquery, npm:chart.js, bootstrap.js, moment.js
 
 some other things I might do in future:
 - form validations
@@ -58,5 +59,6 @@ some other things I might do in future:
 - deployment(probably capistrano)
 - api-serializer (maybe) + json+hal
 - backend caching with redis smt like fresh_when
+- multiple login - OAuth
 
 maybe turn /pages into /apps

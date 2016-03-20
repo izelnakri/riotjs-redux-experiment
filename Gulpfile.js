@@ -26,6 +26,7 @@ var gulp = require('gulp'),
 // maybe - dev mode assignment logic via yargs, build.js
 
 var JS_VENDORS = [
+    'frontend/js/vendor/system.js',
     'frontend/js/vendor/riot+compiler.js',
     'frontend/js/vendor/chart.js',
     'frontend/js/vendor/jquery.js',
@@ -115,9 +116,14 @@ gulp.task('js:pages', function (callback) {
 });
 
 gulp.task('js:redux', function () {
-    return gulp.src([CONSTANTS_PATH, ACTIONS_PATH, REDUCERS_PATH, API_PATH])
+    return gulp.src([
+        'frontend/js/constants/index.js',
+        'frontend/js/actions/index.js',
+        'frontend/js/reducers/index.js',
+        'frontend/js/api/index.js'
+        ])
         .pipe(sourcemaps.init())
-        .pipe(babel())
+        .pipe(babel({ plugins: 'transform-es2015-modules-systemjs' }))
         .pipe(concat('store.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('tmp/js'));

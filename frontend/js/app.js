@@ -56,5 +56,5 @@ App.routesLoad = function () {
     riot.route.base('/');
     riot.route.start(true);
 
-    App.routesload = function(){}; // so nobody can call it again
+    App.routesLoad = function(){}; // so nobody can call it again
 };

@@ -1,4 +1,4 @@
-function feedbacksReducer(state, action) {
+export function feedbacks(state, action) {
     switch(action.type) {
         case 'GET_FEEDBACKS':
             return state;

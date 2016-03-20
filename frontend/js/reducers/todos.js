@@ -1,6 +1,6 @@
 // import undoable, { distinctState } from 'redux-undo'
 
-var todoReducer = function(state, action) {
+export function todo(state, action) {
     switch (action.type) {
     case 'ADD_TODO':
         return {
@@ -19,27 +19,27 @@ var todoReducer = function(state, action) {
     default:
         return state;
     }
-};
+}
 
-var todosReducer = function(state, action) {
+export function todos(state, action) {
     _.defaults(state, []);
 
     switch (action.type) {
     case 'ADD_TODO':
         return [
             ...state, // this is ES6
-            todoReducer(undefined, action)
+            todo(undefined, action)
         ];
     case 'TOGGLE_TODO':
         return state.map(function(t) {
-            todoReducer(t, action);
+            todo(t, action);
         });
     default:
         return state;
     }
-};
+}
 
-var todosVisibilityFilter = function(state, action) {
+export function visibilityFilter(state, action) {
     _.defaults(state, 'SHOW_ALL');
 
     switch (action.type) {
@@ -48,7 +48,7 @@ var todosVisibilityFilter = function(state, action) {
     default:
         return state;
     }
-};
+}
 
 // const undoableTodos = undoable(todos, {
 //   filter: distinctState()

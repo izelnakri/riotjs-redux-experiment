@@ -1,4 +1,4 @@
-function counterReducer(state, action) {
+export function counter(state, action) {
     _.defaults(state, 0);
 
     switch (action.type) {

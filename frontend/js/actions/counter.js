@@ -1,11 +1,18 @@
-var incrementCounter = function() {
+export function incrementCounter() {
     return {
         type: 'INCREMENT'
     };
-};
+}
 
-var decrementCounter = function() {
+export function decrementCounter() {
     return {
         type: 'DECREMENT'
     };
-};
+}
+
+//
+// export function decrementCounter() {
+//     return {
+//         type: 'DECREMENT'
+//     };
+// };
