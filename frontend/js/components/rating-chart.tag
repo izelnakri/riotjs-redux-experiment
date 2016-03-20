@@ -3,6 +3,8 @@
     <canvas class="hidden-sm hidden-md hidden-lg"></canvas>
 
     <script>
+        // store['items'] is actual store
+
         var self = this;
 
         self.items = _.sortBy(store['items'], function(item) {
@@ -41,19 +43,25 @@
         };
 
         self.drawDesktopChart = function () {
-            var context = self.root.querySelector('canvas.hidden-xs')
-                            .getContext("2d");
+            // if check for server-side rendering error fix
+            if (self.root.querySelector) {
+                var context = self.root.querySelector('canvas.hidden-xs')
+                                .getContext("2d");
 
-            self.drawChart(context, self.items);
+                self.drawChart(context, self.items);
+            }
 
             self.update();
         };
 
         self.drawMobileChart = function () {
-            var context = self.root.querySelector('canvas.hidden-md')
-                            .getContext("2d");
+            // if check for server-side rendering error fix
+            if (self.root.querySelector) {
+                var context = self.root.querySelector('canvas.hidden-md')
+                                .getContext("2d");
 
-            self.drawChart(context, self.items, { showScale: false });
+                self.drawChart(context, self.items, { showScale: false });
+            }
 
             self.update();
         };

@@ -18,6 +18,9 @@
     "riot": true,
     "moment": true,
     "store": true,
+    "views": true,
+    "ect": true,
+    "Redux": true,
     "$": true,
     "_": false,
     "User": true,
@@ -26,5 +29,6 @@
     "pending": false,
     "//=": true
   },
-  "-W107": true
+  "-W107": true,
+  "-W079": true
 }

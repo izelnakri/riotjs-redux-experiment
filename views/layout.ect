@@ -1,12 +1,11 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>RiotJS Experiment</title>
-    <meta name="description" content="RiotJS Experiment - Izel Nakri">
+    <title><%- @title || 'RiotJS Experiment' %></title>
+    <meta name="description" content="<%- @description || 'RiotJS Experiment - Izel Nakri' %>">
 
     <!-- optional: Social media tags -->
 
@@ -18,16 +17,28 @@
     <link rel="apple-touch-icon" sizes="120x120" href="">
     <link rel="apple-touch-icon" sizes="152x152" href="/"> -->
 
-    <link rel=stylesheet media=all href="/css/application.css">
+    <link rel="stylesheet" media="all" href="/css/application.css">
   </head>
   <body>
-    <iz-header></iz-header>
+    <% if @header : %>
+        <%- @header %>
+    <% else : %>
+      <iz-header></iz-header>
+    <% end %>
 
-    <page></page>
+    <% if @page : %>
+        <%- @page %>
+    <% else : %>
+        <page id="page"></page>
+    <% end %>
 
-    <iz-footer></iz-footer>
+    <% if @footer : %>
+        <%- @footer %>
+    <% else : %>
+      <iz-footer></iz-footer>
+    <% end %>
 
-    <script src="/js/application.js"></script>
+    <script src="/js/application.js" defer></script>
     <!-- vendor, components, pages async load -->
   </body>
 </html>

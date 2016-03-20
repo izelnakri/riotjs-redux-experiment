@@ -1,4 +1,4 @@
-<page-register>
+<page-register id="page">
     <section class="iz-page-container">
         <div class="row">
             <div class="col-xs-12 col-sm-5 col-md-6">

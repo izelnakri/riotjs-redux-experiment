@@ -27,10 +27,10 @@ var JS_VENDORS = [
     'frontend/js/vendor/riot+compiler.js',
     'frontend/js/vendor/chart.js',
     'frontend/js/vendor/jquery.js',
+    'frontend/js/vendor/redux.js',
     'frontend/js/vendor/bootstrap.js',
     'frontend/js/vendor/lodash.js',
-    'frontend/js/vendor/moment.js',
-    'frontend/js/store.js'
+    'frontend/js/vendor/moment.js'
     ],
     COMPONENTS_PATH = 'frontend/js/components/*.tag',
     PAGES_PATH = 'frontend/js/pages/*.tag';
@@ -55,6 +55,14 @@ gulp.task('js:vendor', function () {
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('tmp/js'));
 });
+
+
+// reducers and actions use the constants
+
+// components use the actions
+
+// js:reducers index should import them all the reducers then .combineReducers
+
 
 gulp.task('js:components:lint', function () {
     return gulp.src(COMPONENTS_PATH)
@@ -108,14 +116,14 @@ gulp.task('js:compile', ['js:vendor', 'js:components', 'js:pages'], function () 
 });
 
 gulp.task('test:components', function () {
-    return gulp.src('test/components/*.js', {read: false}) // add mocha config for requires
+    return gulp.src('test/frontend/components/*.js', {read: false}) // add mocha config for requires
         .pipe(runMocha({reporter: 'spec', timeout: 15000 }));
 });
 
 gulp.task('test:unit', function () {
     process.env.NODE_ENV = 'test';
 
-    return gulp.src('test/unit/*.js', {read: false})
+    return gulp.src('test/backend:unit/*.js', {read: false})
             .pipe(runMocha({reporter: 'spec', timeout: 10000 }));
 });
 

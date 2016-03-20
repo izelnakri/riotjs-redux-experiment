@@ -1,46 +1,46 @@
 // no need for a fancy flux store for this example, not a very fancy store ;)
 var App = {};
 App.load = function () {
-    riot.renderPage = function (pageName) {
-        // maybe riot unmount here first
-        riot.mount('page', 'page-' + pageName);
+    riot.visit = function (pageName) {
+        riot.mount('#page', 'page-' + pageName);
     };
+
     riot.route('/', function() {
-        riot.renderPage('index');
+        riot.visit('index');
         console.log('root route is called');
     });
 
     riot.route('/about', function() {
-        riot.renderPage('about');
+        riot.visit('about');
     });
 
     riot.route('/contact', function() {
-        riot.renderPage('contact');
+        riot.visit('contact');
     });
 
     riot.route('/forgot-password', function() {
-        riot.renderPage('forgot-password');
+        riot.visit('forgot-password');
     });
 
     riot.route('/login', function() {
-        riot.renderPage('login');
+        riot.visit('login');
     });
 
     riot.route('/privacy', function() {
-        riot.renderPage('privacy');
+        riot.visit('privacy');
     });
 
     riot.route('/register', function() {
-        riot.renderPage('register');
+        riot.visit('register');
     });
 
     riot.route('/search?keyword=*', function(keyword) {
-        riot.renderPage('search');
+        riot.visit('search');
         console.log('Search keyword: ' + keyword);
     });
 
     riot.route('/terms', function() {
-        riot.renderPage('terms');
+        riot.visit('terms');
     });
 
     riot.route(function(collection, id, action) {
@@ -52,8 +52,10 @@ App.load = function () {
     riot.route.base('/');
     riot.route.start(true);
 
-    App.loadRoutes = function(){}; // so nobody can call it again
+    App.load = function(){}; // so nobody can call it again
 };
+
+// api + store
 
 var store = {};
 
@@ -62,3 +64,67 @@ $.getJSON('/api/data.json').then(function (data) {
     riot.mount('*');
     App.load();
 });
+
+// REDUX HERE ==========================================
+//normalizr and camelCase libraries + Babel probably needed
+
+function userReducer(state, action) {
+    if(!state) { state = 0; }
+    switch(action.type) {
+        case 'USER_CREATE':
+            return {
+                username: action.username,
+                email: action.email,
+                name: action.name,
+                firstName: action.firstName,
+                lastName: action.lastName,
+                created_at: '',
+                updated_at: '',
+                passwordDigest: ''
+            };
+        default:
+            return state;
+    }
+}
+
+// TRY this below with counter and store:
+
+// var reducer = Redux.combineReducers({
+//   a: doSomethingWithA,
+//   b: processB,
+//   c: c
+// })
+
+function applicationLogic(state, action) {
+    _.defaults(state, initialState);
+    return {
+        user: userReducer(state.user, action),
+        todos: todosReducer(state.todos, action),
+        todo: todoReducer(state.todo, action),
+        todosVisibilityFilter: todosVisibilityFilter(state.todosVisibilityFilter, action)
+    };
+}
+
+var ReduxStore = Redux.createStore(applicationLogic);
+
+ReduxStore.subscribe(function() {
+    console.log(ReduxStore.getState());
+});
+
+// ReduxStore.dispatch({ type: 'INCREMENT' });
+// ReduxStore.dispatch({ type: 'INCREMENT' });
+
+var initialState = {
+    visibilityFilter: 'SHOW_ALL',
+    todos: []
+};
+
+function todoApp(state, action) {
+    if (typeof state === 'undefined') {
+        return initialState;
+    }
+
+    // For now, don’t handle any actions
+    // and just return the state given to us.
+    return state;
+}

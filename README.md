@@ -1,4 +1,4 @@
-/frontend is the actual frontend directory
+Status: isomorphic RiotJS example is done, testing Redux with RiotJS(still in progress)
 
 I did this in RiotJS on purpose to inspire others. JS code is very high quality.
 
@@ -27,24 +27,31 @@ Create the models:
 ``` node server.js ```
 
 FOR UNIT TESTS:
-
 - ``` createdb riotjs_example_test ```
 - ``` sequelize db:migrate --env=test ```
 
-STATUS: Writing unit tests for has_password implementation for a User model in Node.js (sequelize model)
+
+TODO: write TodoList with mapStateToProps for riot tags, action-dispatch routine
+
 
 some other things I might do in future:
 - form validations
 - store changes
+- tests (unit test on the store, API test)
 - multiple data set req integration from a server
 - form generation from js
 - front-end copy + expression read
-- tests
-- async load order
-- real-time comm.
+- copy sharing = backend / frontend / multi-lang
+- async load order, ES6 imports, babel transpiling(maybe)
+- real-time comm. (socket.io)
 - error reporting
 - debugging
-- Object observer
-- isomorphic example(needs backend rendering engine)
+- Object observer (if needed)
+- multi-auth (fb/twitter etc)
+- styleguide
+- rake routes and schema.rb functionality to the backend
+- deployment(probably capistrano)
+- api-serializer (maybe) + json+hal
+- backend caching with redis smt like fresh_when
 
 maybe turn /pages into /apps
