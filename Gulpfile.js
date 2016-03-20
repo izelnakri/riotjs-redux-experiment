@@ -118,7 +118,6 @@ gulp.task('js:redux', function () {
     return gulp.src([CONSTANTS_PATH, ACTIONS_PATH, REDUCERS_PATH, API_PATH])
         .pipe(sourcemaps.init())
         .pipe(babel())
-        .pipe(uglify())
         .pipe(concat('store.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('tmp/js'));
@@ -127,7 +126,8 @@ gulp.task('js:redux', function () {
 gulp.task('js:compile', ['js:vendor', 'js:redux', 'js:components', 'js:pages'], function () {
     return gulp.src([
         'tmp/js/vendor.js', 'tmp/js/store.js','tmp/js/components.js',
-        'tmp/js/pages.js', 'frontend/js/app.js'
+        'tmp/js/pages.js', 'frontend/js/app.js', 'frontend/js/store.js',
+        'frontend/js/initializer.js'
         ])
         .pipe(uglify())
         .pipe(concat('application.js'))

@@ -20,6 +20,7 @@
     "store": true,
     "views": true,
     "ect": true,
+    "App": true,
     "Store": true,
     "dispatch": true,
     "Redux": true,

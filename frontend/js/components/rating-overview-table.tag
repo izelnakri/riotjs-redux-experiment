@@ -26,6 +26,8 @@
         // REFACTOR the getJSON and better data-structure get/set
         var self = this;
 
+        self.mixin('store');
+        
         self.ratings = [[], [], [], [], []];
 
         self.on('mount', function () {

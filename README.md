@@ -37,6 +37,7 @@ TODO: write TodoList with mapStateToProps for riot tags, action-dispatch routine
 - add ES6 modules
 - optimize the gulp build process
 - maybe add 'selectors' for Redux
+- namespace reducers and actions
 
 some other things I might do in future:
 - form validations

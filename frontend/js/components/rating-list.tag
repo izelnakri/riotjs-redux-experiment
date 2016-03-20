@@ -67,6 +67,8 @@
     <script>
         var self = this;
 
+        self.mixin('store');
+
         self.toggleRating = function (event) {
             // there is a bug here in one of the lodash funct is wrong:
 

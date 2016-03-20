@@ -7,15 +7,18 @@
 
         var self = this;
 
-        self.items = _.sortBy(store['items'], function(item) {
-            return item.creation_date;
-        });
+        self.mixin('store');
 
-        self.drawChart = function (context, items, options) {
-            var dates = _.map(items, function (item) {
+        // self.items = _.sortBy(store['items'], function(item) {
+        //     return item.creation_date;
+        // });
+
+        self.drawChart = function (context, options) {
+            // make this from the store:
+            var dates = _.map(store.feedbacks.items, function (item) {
                     return moment(item.creation_date).format('h:mm a');
                 }),
-                ratings = _.map(items, function (item) {
+                ratings = _.map(store.feedbacks.items, function (item) {
                     return item.rating;
                 });
 
@@ -48,7 +51,7 @@
                 var context = self.root.querySelector('canvas.hidden-xs')
                                 .getContext("2d");
 
-                self.drawChart(context, self.items);
+                self.drawChart(context);
             }
 
             self.update();
@@ -60,7 +63,7 @@
                 var context = self.root.querySelector('canvas.hidden-md')
                                 .getContext("2d");
 
-                self.drawChart(context, self.items, { showScale: false });
+                self.drawChart(context, { showScale: false });
             }
 
             self.update();
