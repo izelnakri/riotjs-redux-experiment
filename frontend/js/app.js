@@ -142,5 +142,7 @@ riot.mixin('store', {
         });
 
         // performance optimization: unsubscribe on unmount if its necessary
+
+        // register actions to the global namespace
     }
 });
