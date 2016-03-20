@@ -20,6 +20,8 @@
     "store": true,
     "views": true,
     "ect": true,
+    "Store": true,
+    "dispatch": true,
     "Redux": true,
     "$": true,
     "_": false,

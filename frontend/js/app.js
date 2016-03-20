@@ -103,6 +103,7 @@ function storeLogic(state, action) {
         state = initialState;
     }
 
+    // namespace these reducers with ES6 imports:
     return {
         user: userReducer(state.user, action),
         todos: todosReducer(state.todos, action),
@@ -116,4 +117,30 @@ var Store = Redux.createStore(storeLogic);
 
 Store.subscribe(function() {
     console.log(Store.getState());
+});
+
+riot.mixin('store', {
+    init: function() {
+        var self = this;
+
+        Store = Store;
+        dispatch = Store.dispatch;
+
+        self.on('mount', function() {
+            self.store = Store.getState();
+
+            Store.subscribe(function() {
+                self.store = Store.getState();
+                // performance optimization: find which selector is used
+            });
+            console.log('Store mount is called for a tag');
+            self.update();
+        });
+
+        self.on('update', function() {
+            console.log('Store update is called for a tag');
+        });
+
+        // performance optimization: unsubscribe on unmount if its necessary
+    }
 });
