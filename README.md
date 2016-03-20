@@ -36,6 +36,7 @@ TODO: write TodoList with mapStateToProps for riot tags, action-dispatch routine
 - make Object.assign + optional parameters work with Babel
 - add ES6 modules
 - optimize the gulp build process
+- maybe add 'selectors' for Redux
 
 some other things I might do in future:
 - form validations
