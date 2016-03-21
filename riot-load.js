@@ -35,8 +35,6 @@ var walk = function(dir) {
 
 global.views = {};
 
-console.log(__dirname);
-
 walk(__dirname + '/frontend/js')
     .filter((file) => {
         return (file.indexOf('.') !== 0) && (file.slice(-4) === '.tag');
@@ -85,13 +83,13 @@ var initialState = {
 //
 //
 // // CREATE AN ISSUE FOR SELF.ROOT.QUERYSELECTOR
-// global.riot.mixin({
-//     init: function () {
-//         global._ = _;
-//         global.store = {};
-//         global.Chart = function(){};
-//     }
-// });
+global.riot.mixin({
+    init: function () {
+        global._ = _;
+        global.store = {};
+        global.Chart = function(){};
+    }
+});
 //
 // global.riot.mixin('store', {
 //     init: function () {

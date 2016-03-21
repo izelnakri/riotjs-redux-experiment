@@ -10,7 +10,7 @@ All the css is component specific, bootstrap has been used to its full power.
 
 This frontend structure goes well with a flux architecture. (RiotJS has a built-in EventEmitter)
 
-- ``` npm install gulp riot sequelize-cli babel-cli jspm -g ```
+- ``` npm install gulp riot sequelize-cli babel-cli browserify -g ```
 
 - ``` npm install ```
 
@@ -29,7 +29,7 @@ FOR UNIT TESTS:
 - ``` sequelize db:migrate --env=test ```
 
 TODO:
-- move jspm config.js
+- remove redundant package.json dependencies, check them for README
 - try node with jspm instead of babel-node
 - nodemon to restart process on every change
 - make sourcemaps work for js + css

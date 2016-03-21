@@ -14,6 +14,7 @@
   "globals": {
     "opts": true,
     "document": true,
+    "window": true,
     "Chart": true,
     "riot": true,
     "moment": true,

@@ -1,4 +1,4 @@
-function user(state, action) {
+export function user(state, action) {
     if(!state) { state = 0; }
     switch(action.type) {
         case 'USER_CREATE':

@@ -1,4 +1,9 @@
-var App = {};
+// import './constants';
+// import {Store} from './store.js';
+// import * as API from './api';
+import './store.js';
+
+window.App = {};
 
 App.routesLoad = function () {
     riot.visit = function (pageName) {
@@ -58,3 +63,13 @@ App.routesLoad = function () {
 
     App.routesLoad = function(){}; // so nobody can call it again
 };
+
+var AppInitializer = (function () {
+    $.getJSON('/api/data.json').then(function (data) {
+        window.store = data;
+        riot.mount('*');
+        App.routesLoad();
+    });
+
+    return {};
+})();

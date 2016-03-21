@@ -1,3 +1,6 @@
+import * as actions from './actions';
+import * as reducers from './reducers';
+
 // REDUX HERE ==========================================
 //normalizr and camelCase libraries + Babel probably needed
 
@@ -21,18 +24,28 @@ function storeLogic(state, action) {
         state = initialState;
     }
 
-    // namespace these reducers with ES6 imports:
+    // maybe iterate from reducers object and create these:
+
     return {
-        user: userReducer(state.user, action),
-        todos: todosReducer(state.todos, action),
-        todo: todoReducer(state.todo, action),
-        counter: counterReducer(state.counter, action),
-        todosVisibilityFilter: todosVisibilityFilter(state.todosVisibilityFilter, action),
-        feedbacks: feedbacksReducer(state.feedbacks, action)
+        user: reducers.user(state.user, action),
+        todos: reducers.todos(state.todos, action),
+        todo: reducers.todo(state.todo, action),
+        counter: reducers.counter(state.counter, action),
+        todosVisibilityFilter: reducers.todosVisibilityFilter(state.todosVisibilityFilter, action),
+        feedbacks: reducers.feedbacks(state.feedbacks, action)
     };
+    // namespace these reducers with ES6 imports:
+    // return {
+    //     user: user(state.user, action),
+    //     todos: todosReducer(state.todos, action),
+    //     todo: todoReducer(state.todo, action),
+    //     counter: counterReducer(state.counter, action),
+    //     todosVisibilityFilter: todosVisibilityFilter(state.todosVisibilityFilter, action),
+    //     feedbacks: feedbacksReducer(state.feedbacks, action)
+    // };
 }
 
-var Store = Redux.createStore(storeLogic);
+window.Store = Redux.createStore(storeLogic);
 
 Store.subscribe(function() {
     console.log(Store.getState());

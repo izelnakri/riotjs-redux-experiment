@@ -1,8 +1,12 @@
 'use strict';
 
 var gulp = require('gulp'),
+    babelify = require('babelify'),
+    browserify = require('browserify');
+var buffer = require('vinyl-buffer');
+var source = require('vinyl-source-stream');
+var sourcemaps = require('gulp-sourcemaps'),
     concat = require('gulp-concat'),
-    sourcemaps = require('gulp-sourcemaps'),
     sass = require('gulp-sass'),
     cssMinify = require('gulp-cssnano'),
     cssPrefix = require('gulp-autoprefixer'),
@@ -26,7 +30,6 @@ var gulp = require('gulp'),
 // maybe - dev mode assignment logic via yargs, build.js
 
 var JS_VENDORS = [
-    'frontend/js/vendor/system.js',
     'frontend/js/vendor/riot+compiler.js',
     'frontend/js/vendor/chart.js',
     'frontend/js/vendor/jquery.js',
@@ -60,7 +63,7 @@ gulp.task('scss', function () {
 gulp.task('js:vendor', function () {
     return gulp.src(JS_VENDORS)
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('tmp/js'));
+        .pipe(gulp.dest('public/js'));
 });
 
 
@@ -115,28 +118,53 @@ gulp.task('js:pages', function (callback) {
     runSequence('js:pages:shell', callback);
 });
 
-gulp.task('js:redux', function () {
-    return gulp.src([
-        'frontend/js/constants/index.js',
-        'frontend/js/actions/index.js',
-        'frontend/js/reducers/index.js',
-        'frontend/js/api/index.js'
-        ])
-        .pipe(sourcemaps.init())
-        .pipe(babel({ plugins: 'transform-es2015-modules-systemjs' }))
-        .pipe(concat('store.js'))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('tmp/js'));
+// gulp.task('js:redux', function () {
+//     return gulp.src([
+//         'frontend/js/constants/index.js',
+//         'frontend/js/actions/index.js',
+//         'frontend/js/reducers/index.js',
+//         'frontend/js/api/index.js'
+//         ])
+//         .pipe(sourcemaps.init())
+//         .pipe(babel({ plugins: 'transform-es2015-modules-systemjs' }))
+//         .pipe(concat('store.js'))
+//         .pipe(sourcemaps.write('.'))
+//         .pipe(gulp.dest('tmp/js'));
+// });
+
+// gulp.task('js:compile', ['js:components', 'js:pages'], function () {
+//     return gulp.src([
+//         'frontend/js/app.js', 'tmp/js/components.js',
+//         'tmp/js/pages.js', 'frontend/js/store.js',
+//         'frontend/js/initializer.js'
+//         ])
+//         .pipe(babel())
+//         .pipe(uglify())
+        // .pipe(concat('application.js'))
+//         .pipe(gulp.dest('public/js'));
+// });
+
+
+gulp.task('js:riot:compile', ['js:components', 'js:pages'], function() {
+    return gulp.src(['tmp/js/components.js', 'tmp/js/pages.js'])
+        .pipe(uglify())
+        .pipe(concat('views.js'))
+        .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('js:compile', ['js:vendor', 'js:redux', 'js:components', 'js:pages'], function () {
-    return gulp.src([
-        'tmp/js/vendor.js', 'tmp/js/store.js','tmp/js/components.js',
-        'tmp/js/pages.js', 'frontend/js/app.js', 'frontend/js/store.js',
-        'frontend/js/initializer.js'
-        ])
-        .pipe(uglify())
-        .pipe(concat('application.js'))
+gulp.task('js:compile', function() {
+    var bundler = browserify({
+        entries: 'frontend/js/app.js',
+        debug: true
+    });
+    bundler.transform(babelify);
+    bundler.bundle()
+        .on('error', function (err) { console.error(err); })
+        .pipe(source('app.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(uglify()) // Use any gulp plugins you want now
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('public/js'));
 });
 
@@ -159,7 +187,7 @@ gulp.task('test:unit', function () {
 //   }, done).start();
 // });
 
-gulp.task('watch', ['scss', 'js:compile'], function () {
+gulp.task('watch', ['scss', 'js:vendor', 'js:riot:compile', 'js:compile'], function () {
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
     gulp.watch(COMPONENTS_PATH, ['js:compile']);
     gulp.watch(PAGES_PATH, ['js:compile']);
