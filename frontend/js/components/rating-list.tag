@@ -22,7 +22,7 @@
                         <td>Platform</td>
                     </tr>
                 </thead>
-                <tbody each={item in items}>
+                <tbody each={item in store.items}>
                     <tr>
                         <td class="hidden-sm hidden-lg hidden-md">
                             Feedback
@@ -86,7 +86,7 @@
                 return self.update();
             }
 
-            var ratingItems = _.filter(store['items'], function (item) {
+            var ratingItems = _.filter(self.store.items, function (item) {
                 return item.rating === ratingNo;
             });
 
@@ -108,7 +108,7 @@
         };
 
         self.on('mount', function () {
-            self.items = store['items'];
+            self.items = self.store.items;
             self.update();
         });
     </script>

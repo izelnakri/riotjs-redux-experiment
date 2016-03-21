@@ -25,13 +25,15 @@
     <script>
         // REFACTOR the getJSON and better data-structure get/set
         var self = this;
+        console.log('hello world');
+        console.log(_.VERSION);
 
         self.mixin('store');
-        
+
         self.ratings = [[], [], [], [], []];
 
         self.on('mount', function () {
-            _.each(store['items'], function(item) {
+            _.each(self.store.items, function(item) {
                 self.ratings[item.rating - 1].push(item);
             });
 

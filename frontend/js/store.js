@@ -31,21 +31,14 @@ function storeLogic(state, action) {
         todos: reducers.todos(state.todos, action),
         todo: reducers.todo(state.todo, action),
         counter: reducers.counter(state.counter, action),
-        todosVisibilityFilter: reducers.todosVisibilityFilter(state.todosVisibilityFilter, action),
+        todosVisibilityFilter: reducers.visibilityFilter(state.todosVisibilityFilter, action),
         feedbacks: reducers.feedbacks(state.feedbacks, action)
     };
-    // namespace these reducers with ES6 imports:
-    // return {
-    //     user: user(state.user, action),
-    //     todos: todosReducer(state.todos, action),
-    //     todo: todoReducer(state.todo, action),
-    //     counter: counterReducer(state.counter, action),
-    //     todosVisibilityFilter: todosVisibilityFilter(state.todosVisibilityFilter, action),
-    //     feedbacks: feedbacksReducer(state.feedbacks, action)
-    // };
 }
 
 window.Store = Redux.createStore(storeLogic);
+window.actions = actions;
+window.reducers = reducers;
 
 Store.subscribe(function() {
     console.log(Store.getState());
@@ -56,7 +49,7 @@ riot.mixin('store', {
         var self = this;
 
         Store = Store;
-        dispatch = Store.dispatch;
+        window.dispatch = window.Store.dispatch;
 
         self.on('mount', function() {
             self.store = Store.getState();

@@ -66,7 +66,7 @@ App.routesLoad = function () {
 
 var AppInitializer = (function () {
     $.getJSON('/api/data.json').then(function (data) {
-        window.store = data;
+        // window.store.feedbacks = data;
         riot.mount('*');
         App.routesLoad();
     });

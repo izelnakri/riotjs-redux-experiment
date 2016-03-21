@@ -44,6 +44,7 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+    // res.render('layout');
     res.send(
         ect.render('layout', {
             header: riot.render(views['header']),

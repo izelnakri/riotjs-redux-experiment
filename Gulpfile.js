@@ -2,10 +2,10 @@
 
 var gulp = require('gulp'),
     babelify = require('babelify'),
-    browserify = require('browserify');
-var buffer = require('vinyl-buffer');
-var source = require('vinyl-source-stream');
-var sourcemaps = require('gulp-sourcemaps'),
+    browserify = require('browserify'),
+    buffer = require('vinyl-buffer'),
+    source = require('vinyl-source-stream'),
+    sourcemaps = require('gulp-sourcemaps'),
     concat = require('gulp-concat'),
     sass = require('gulp-sass'),
     cssMinify = require('gulp-cssnano'),
@@ -24,7 +24,6 @@ var sourcemaps = require('gulp-sourcemaps'),
     // maybe add gulp notify and gulpif
 
 // for js: sourcemaps, uglify, jshint, plumber, maybe babel
-// for js: require, riotjs
 
 // maybe add usage:
 // maybe - dev mode assignment logic via yargs, build.js
@@ -65,14 +64,6 @@ gulp.task('js:vendor', function () {
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('public/js'));
 });
-
-
-// reducers and actions use the constants
-
-// components use the actions
-
-// js:reducers index should import them all the reducers then .combineReducers
-
 
 gulp.task('js:components:lint', function () {
     return gulp.src(COMPONENTS_PATH)
@@ -118,33 +109,6 @@ gulp.task('js:pages', function (callback) {
     runSequence('js:pages:shell', callback);
 });
 
-// gulp.task('js:redux', function () {
-//     return gulp.src([
-//         'frontend/js/constants/index.js',
-//         'frontend/js/actions/index.js',
-//         'frontend/js/reducers/index.js',
-//         'frontend/js/api/index.js'
-//         ])
-//         .pipe(sourcemaps.init())
-//         .pipe(babel({ plugins: 'transform-es2015-modules-systemjs' }))
-//         .pipe(concat('store.js'))
-//         .pipe(sourcemaps.write('.'))
-//         .pipe(gulp.dest('tmp/js'));
-// });
-
-// gulp.task('js:compile', ['js:components', 'js:pages'], function () {
-//     return gulp.src([
-//         'frontend/js/app.js', 'tmp/js/components.js',
-//         'tmp/js/pages.js', 'frontend/js/store.js',
-//         'frontend/js/initializer.js'
-//         ])
-//         .pipe(babel())
-//         .pipe(uglify())
-        // .pipe(concat('application.js'))
-//         .pipe(gulp.dest('public/js'));
-// });
-
-
 gulp.task('js:riot:compile', ['js:components', 'js:pages'], function() {
     return gulp.src(['tmp/js/components.js', 'tmp/js/pages.js'])
         .pipe(uglify())
@@ -189,8 +153,8 @@ gulp.task('test:unit', function () {
 
 gulp.task('watch', ['scss', 'js:vendor', 'js:riot:compile', 'js:compile'], function () {
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
-    gulp.watch(COMPONENTS_PATH, ['js:compile']);
-    gulp.watch(PAGES_PATH, ['js:compile']);
+    gulp.watch(COMPONENTS_PATH, ['js:riot:compile']);
+    gulp.watch(PAGES_PATH, ['js:riot:compile']);
     gulp.watch(CONSTANTS_PATH, ['js:compile']);
     gulp.watch(ACTIONS_PATH, ['js:compile']);
     gulp.watch(REDUCERS_PATH, ['js:compile']);

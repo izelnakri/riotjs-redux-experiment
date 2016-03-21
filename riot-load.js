@@ -1,3 +1,5 @@
+global._ = require('lodash');
+
 import * as actions from './frontend/js/actions';
 import * as reducers from './frontend/js/reducers';
 
@@ -6,8 +8,8 @@ global.reducers = reducers;
 
 var fs = require('fs'),
     path = require('path'),
-    _ = require('lodash'),
     Redux = require('redux'),
+    _ = require('lodash'),
     riot = require('riot');
 
 global.ect = require('ect')({
@@ -62,23 +64,23 @@ var initialState = {
     }
 };
 
-// function storeLogic(state, action) {
-//     if (!state) {
-//         state = initialState;
-//     }
-//
-//     // namespace these reducers with ES6 imports:
-//     return {
-//         user: reducers.userReducer(state.user, action),
-//         todos: reducers.todosReducer(state.todos, action),
-//         todo: reducers.todoReducer(state.todo, action),
-//         counter: reducers.counterReducer(state.counter, action),
-//         todosVisibilityFilter: reducers.todosVisibilityFilter(state.todosVisibilityFilter, action),
-//         feedbacks: reducers.feedbacksReducer(state.feedbacks, action)
-//     };
-// }
-//
-// var Store = Redux.createStore(storeLogic);
+function storeLogic(state, action) {
+    if (!state) {
+        state = initialState;
+    }
+
+    // namespace these reducers with ES6 imports:
+    return {
+        user: reducers.user(state.user, action),
+        todos: reducers.todos(state.todos, action),
+        todo: reducers.todo(state.todo, action),
+        counter: reducers.counter(state.counter, action),
+        todosVisibilityFilter: reducers.visibilityFilter(state.todosVisibilityFilter, action),
+        feedbacks: reducers.feedbacks(state.feedbacks, action)
+    };
+}
+
+var Store = Redux.createStore(storeLogic);
 //
 //
 //
@@ -86,29 +88,30 @@ var initialState = {
 global.riot.mixin({
     init: function () {
         global._ = _;
-        global.store = {};
         global.Chart = function(){};
     }
 });
-//
-// global.riot.mixin('store', {
-//     init: function () {
-//         global.Store = Store;
-//         dispatch = Store.dispatch;
-//
-//         self.on('mount', function() {
-//             self.store = Store.getState();
-//
-//             Store.subscribe(function() {
-//                 self.store = Store.getState();
-//                 // performance optimization: find which selector is used
-//             });
-//             console.log('Store mount is called for a tag: ' + self.root.tagName);
-//             self.update();
-//         });
-//
-//         self.on('update', function() {
-//             console.log('Store update is called for a tag: ' + self.root.tagName);
-//         });
-//     }
-// })
+
+global.riot.mixin('store', {
+    init: function () {
+        var self = this;
+
+        global.Store = Store;
+        global.dispatch = global.Store.dispatch;
+
+        self.on('mount', function() {
+            self.store = Store.getState();
+
+            Store.subscribe(function() {
+                self.store = Store.getState();
+                // performance optimization: find which selector is used
+            });
+            console.log('Store mount is called for a tag: ' + self.root.tagName);
+            self.update();
+        });
+
+        self.on('update', function() {
+            console.log('Store update is called for a tag: ' + self.root.tagName);
+        });
+    }
+});

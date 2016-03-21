@@ -15,10 +15,10 @@
 
         self.drawChart = function (context, options) {
             // make this from the store:
-            var dates = _.map(store.feedbacks.items, function (item) {
+            var dates = _.map(self.store.feedbacks.items, function (item) {
                     return moment(item.creation_date).format('h:mm a');
                 }),
-                ratings = _.map(store.feedbacks.items, function (item) {
+                ratings = _.map(self.store.feedbacks.items, function (item) {
                     return item.rating;
                 });
 
