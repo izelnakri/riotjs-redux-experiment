@@ -4,7 +4,8 @@
   "description": "",
   "main": "Gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "babel-node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -46,12 +47,15 @@
     "bcrypt": "^0.8.5",
     "browserify": "^13.0.0",
     "colors": "^1.1.2",
+    "compression": "^1.6.1",
     "ect": "^0.5.9",
     "express": "^4.13.4",
     "gulp-browserify": "^0.5.1",
     "gulp-sourcemaps": "^1.6.0",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.0.1",
     "riot": "^2.3.16",
     "sequelize": "^3.19.3",
     "sequelize-cli": "^2.3.1",
@@ -59,17 +63,5 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "webpack-stream": "^3.1.0"
-  },
-  "jspm": {
-    "dependencies": {
-      "bootstrap": "npm:bootstrap@^3.3.6",
-      "chart.js": "npm:chart.js@^1.0.2",
-      "jquery": "npm:jquery@^2.2.2",
-      "lodash": "npm:lodash@^4.6.1",
-      "lodash-node": "npm:lodash-node@^3.10.2",
-      "moment": "npm:moment@^2.12.0",
-      "riot": "npm:riot@^2.3.17"
-    },
-    "devDependencies": {}
   }
 }

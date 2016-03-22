@@ -25,8 +25,6 @@
     <script>
         // REFACTOR the getJSON and better data-structure get/set
         var self = this;
-        console.log('hello world');
-        console.log(_.VERSION);
 
         self.mixin('store');
 

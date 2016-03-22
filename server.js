@@ -6,6 +6,7 @@ require('./riot-load');
 
 var express = require('express'),
     app = express(),
+    compress = require('compression'),
     morgan = require('morgan'),
     ect = require('ect')({
         watch: true, root: __dirname + '/views', ext : '.ect'
@@ -24,6 +25,7 @@ app.engine('ect', ect.render);
 var html = require('./routes'),
     api = require('./routes/api');
 
+app.use(compress({ threshhold: 512 }));
 app.use('/', html);
 app.use('/api', api);
 

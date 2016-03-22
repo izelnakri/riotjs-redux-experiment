@@ -69,9 +69,14 @@
             self.update();
         };
 
-        self.on('mount', function () {
-            self.drawDesktopChart();
-            self.drawMobileChart();
+        self.on('update', function () {
+            console.log(self);
+            if (self.store && self.store.feedbacks) {
+                console.log(self.store.feedbacks);
+                console.log('this is called');
+                self.drawDesktopChart();
+                self.drawMobileChart();
+            }
         });
 
     </script>

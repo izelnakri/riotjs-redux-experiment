@@ -5,12 +5,28 @@ var express = require('express'),
 
 router.use('/', express.static('public'));
 
+router.get('/register', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['register']),
+            footer: riot.render(views['footer'])
+        })
+    );
+});
+
 router.post('/register', (req, res) => {
-    // bcrypt.genSalt(10, function(err, salt) {
-    //     bcrypt.hash('B4c0/\/', salt, function(err, hash) {
-    //         // Store hash in your password DB.
-    //     });
-    // });
+
+});
+
+router.get('/login', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['login']),
+            footer: riot.render(views['footer'])
+        })
+    );
 });
 
 router.post('/login', (req, res) => {
@@ -25,8 +41,28 @@ router.delete('/logout', (req, res) => {
 
 });
 
+router.get('/forgot-password', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['forgot-password']),
+            footer: riot.render(views['footer'])
+        })
+    );
+});
+
 router.post('/change-password', (req, res) => {
 
+});
+
+router.get('/feedback', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['feedback']),
+            footer: riot.render(views['footer'])
+        })
+    );
 });
 
 router.post('/feedback', (req, res) => {
@@ -38,6 +74,16 @@ router.get('/about', (req, res) => {
         ect.render('layout', {
             header: riot.render(views['header']),
             page: riot.render(views['about']),
+            footer: riot.render(views['footer'])
+        })
+    );
+});
+
+router.get('/counter', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['counter']),
             footer: riot.render(views['footer'])
         })
     );

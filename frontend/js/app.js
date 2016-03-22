@@ -1,6 +1,3 @@
-// import './constants';
-// import {Store} from './store.js';
-// import * as API from './api';
 import './store.js';
 
 window.App = {};
@@ -65,7 +62,7 @@ App.routesLoad = function () {
 };
 
 var AppInitializer = (function () {
-    $.getJSON('/api/data.json').then(function (data) {
+    $.getJSON('/api/feedbacks').then(function (data) {
         // window.store.feedbacks = data;
         riot.mount('*');
         App.routesLoad();

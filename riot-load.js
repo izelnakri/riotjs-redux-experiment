@@ -81,9 +81,7 @@ function storeLogic(state, action) {
 }
 
 var Store = Redux.createStore(storeLogic);
-//
-//
-//
+
 // // CREATE AN ISSUE FOR SELF.ROOT.QUERYSELECTOR
 global.riot.mixin({
     init: function () {
@@ -108,10 +106,6 @@ global.riot.mixin('store', {
             });
             console.log('Store mount is called for a tag: ' + self.root.tagName);
             self.update();
-        });
-
-        self.on('update', function() {
-            console.log('Store update is called for a tag: ' + self.root.tagName);
         });
     }
 });

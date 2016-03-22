@@ -19,6 +19,8 @@
     "riot": true,
     "moment": true,
     "store": true,
+    "actions": true,
+    "reducers": true,
     "views": true,
     "ect": true,
     "App": true,
@@ -34,5 +36,6 @@
     "//=": true
   },
   "-W107": true,
-  "-W079": true
+  "-W079": true,
+  "-W138": false
 }

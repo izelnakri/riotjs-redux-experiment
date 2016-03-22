@@ -16,16 +16,9 @@
         var self = this;
 
         self.mixin('store');
-        console.log('Store is');
-        console.log(Store);
 
-        // maybe mixin should do this repetition
-        self.incrementCounter = function() {
-            return dispatch(actions.incrementCounter());
-        };
-
-        self.decrementCounter = function() {
-            return dispatch(actions.decrementCounter());
-        };
+        self.on('mount', function () {
+            console.log(self);
+        });
     </script>
 </page-counter>

@@ -8,8 +8,6 @@ iz namespace is used. For example: ``` <iz-rating-list /> ```
 
 All the css is component specific, bootstrap has been used to its full power.
 
-This frontend structure goes well with a flux architecture. (RiotJS has a built-in EventEmitter)
-
 - ``` npm install gulp riot sequelize-cli babel-cli browserify -g ```
 
 - ``` npm install ```
@@ -22,7 +20,7 @@ Create the models:
 
 ``` gulp watch ```
 
-``` babel-node server.js ```
+``` npm run server ```
 
 FOR UNIT TESTS:
 - ``` createdb riotjs_example_test ```
@@ -60,5 +58,6 @@ some other things I might do in future:
 - api-serializer (maybe) + json+hal
 - backend caching with redis smt like fresh_when
 - multiple login - OAuth
+- maybe nodemon with babel in future
 
 maybe turn /pages into /apps
