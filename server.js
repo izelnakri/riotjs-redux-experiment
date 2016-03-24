@@ -1,3 +1,7 @@
+require('babel-register')({
+   presets: [ 'es2015' ]
+});
+
 require('colors');
 require('./models');
 require('./riot-load');
