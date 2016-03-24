@@ -28,7 +28,7 @@ FOR UNIT TESTS:
 
 TODO:
 - remove redundant package.json dependencies, check them for README
-- try node with jspm instead of babel-node
+- find the redux-form and redux-localstorage solution without react
 - nodemon to restart process on every change
 - make sourcemaps work for js + css
 - make Object.assign + optional parameters work with Babel

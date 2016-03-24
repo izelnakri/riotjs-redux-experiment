@@ -3,15 +3,9 @@
     <canvas class="hidden-sm hidden-md hidden-lg"></canvas>
 
     <script>
-        // store['items'] is actual store
-
         var self = this;
 
         self.mixin('store');
-
-        // self.items = _.sortBy(store['items'], function(item) {
-        //     return item.creation_date;
-        // });
 
         self.drawChart = function (context, options) {
             // make this from the store:
@@ -78,6 +72,10 @@
                 self.drawMobileChart();
             }
         });
+
+        // self.on('mount', function() {
+        //     dispatch(actions.fetchFeedbacksIfNeeded());
+        // });
 
     </script>
 </iz-rating-chart>

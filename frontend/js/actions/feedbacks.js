@@ -19,9 +19,17 @@ export function fetchFeedbacks() {
 export function receiveFeedbacks(feedbacks) {
     return {
         type: 'RECEIVE_FEEDBACKS',
-        feedbacks,
+        feedbacks: sortFeedbackItems(feedbacks),
         receivedAt: Date.now()
     };
+}
+
+function sortFeedbackItems(feedbacks) {
+    feedbacks['items'] = _.sortBy(feedbacks['items'], function(item) {
+        return item.creation_date;
+    });
+
+    return feedbacks;
 }
 
 export function shouldFetchFeedbacks(state) {

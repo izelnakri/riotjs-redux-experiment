@@ -3,12 +3,15 @@ import './store.js';
 window.App = {};
 
 App.routesLoad = function () {
-    riot.visit = function (pageName) {
-        riot.mount('#page', 'page-' + pageName);
+    riot.visit = function (pageName, opts) {
+        riot.mount('#page', 'page-' + pageName, opts);
     };
 
     riot.route('/', function() {
         riot.visit('index');
+        fetch('/api/feedbacks')
+              .then(response => response.json())
+              .then(json => Store.dispatch(actions.fetchFeedbacksIfNeeded(json)));
         console.log('root route is called');
     });
 

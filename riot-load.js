@@ -64,7 +64,7 @@ var initialState = {
     }
 };
 
-function storeLogic(state, action) {
+function store(state, action) {
     if (!state) {
         state = initialState;
     }
@@ -80,7 +80,7 @@ function storeLogic(state, action) {
     };
 }
 
-var Store = Redux.createStore(storeLogic);
+var Store = Redux.createStore(store);
 
 // // CREATE AN ISSUE FOR SELF.ROOT.QUERYSELECTOR
 global.riot.mixin({
@@ -100,12 +100,12 @@ global.riot.mixin('store', {
         self.on('mount', function() {
             self.store = Store.getState();
 
-            Store.subscribe(function() {
-                self.store = Store.getState();
-                // performance optimization: find which selector is used
-            });
+            // Store.subscribe(function() {
+            //     self.store = Store.getState();
+            //     // performance optimization: find which selector is used
+            // });
             console.log('Store mount is called for a tag: ' + self.root.tagName);
-            self.update();
+            // self.update();
         });
     }
 });
