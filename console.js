@@ -1,4 +1,3 @@
-require('node-babel')();
 require('./models');
 require('./riot-load');
 
