@@ -43,6 +43,7 @@ var JS_VENDORS = [
     CONSTANTS_PATH = 'frontend/js/constants/*.js',
     ACTIONS_PATH = 'frontend/js/actions/*.js',
     REDUCERS_PATH = 'frontend/js/reducers/*.js',
+    SELECTORS_PATH = 'frontend/js/selectors/*.js',
     API_PATH = 'frontend/js/api/*.js';
 
 gulp.task('scss', function () {
@@ -160,6 +161,7 @@ gulp.task('watch', ['scss', 'js:vendor', 'js:riot:compile', 'js:compile'], funct
     gulp.watch(ACTIONS_PATH, ['js:compile']);
     gulp.watch(REDUCERS_PATH, ['js:compile']);
     gulp.watch(API_PATH, ['js:compile']);
+    gulp.watch(SELECTORS_PATH, ['js:compile']);
     gulp.watch('frontend/js/app.js', ['js:compile']);
     gulp.watch('frontend/js/store.js', ['js:compile']);
     gulp.watch('frontend/js/initializer.js', ['js:compile']);

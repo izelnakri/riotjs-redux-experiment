@@ -1,5 +1,7 @@
+import {createSelector} from 'reselect';
 import * as actions from './actions';
 import * as reducers from './reducers';
+import * as selectors from './selectors';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 // REDUX HERE ==========================================
@@ -19,6 +21,8 @@ var initialState = {
         ratings: [1, 2, 3, 4, 5]
     }
 };
+
+
 
 /**
  * Logs all actions and states after they are dispatched.
@@ -81,8 +85,10 @@ var Store = Redux.createStore(
 );
 
 window.Store = Store;
+window.createSelector = createSelector;
 window.actions = actions;
 window.reducers = reducers;
+window.selectors = selectors;
 
 riot.mixin('store', {
     init: function() {
@@ -90,6 +96,7 @@ riot.mixin('store', {
 
         // store = Store.getState();
         window.dispatch = Store.dispatch;
+        window.createSelector = createSelector;
 
         _.each(Object.keys(actions), function(action) {
             self[action] = function() {

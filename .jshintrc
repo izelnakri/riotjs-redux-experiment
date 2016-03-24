@@ -21,6 +21,7 @@
     "store": true,
     "actions": true,
     "reducers": true,
+    "selectors": true,
     "views": true,
     "ect": true,
     "App": true,
