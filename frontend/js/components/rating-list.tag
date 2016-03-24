@@ -72,29 +72,12 @@
         // THIS IS AN INTERESTING PROBLEM = CHECK HOW TO DO THIS WITH THE STORE:
 
         self.toggleRating = function (event) {
-            // there is a bug here in one of the lodash funct is wrong:
-
             var ratingNo = event.item.number;
-                // displayed = _.find(self.store.feedbacks.items, function(item) {
-                //     return item.rating === ratingNo;
-                // });
 
             $(event.currentTarget).toggleClass('iz-toggled');
 
             selectors.filterFeedbacks(ratingNo);
 
-            // if (displayed) {
-            //     self.items = _.reject(self.store.feedbacks.items, function (item) {
-            //         return item.rating === ratingNo;
-            //     });
-            //     return self.update();
-            // }
-            //
-            // var ratingItems = _.filter(self.store.items, function (item) {
-            //     return item.rating === ratingNo;
-            // });
-            //
-            // self.items = _.merge(self.items, ratingItems);
             return self.update();
         };
 
