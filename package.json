@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "babel-node server.js",
-    "start": "./node_modules/babel/bin/babel-node.js server.js"
+    "start": "./node_modules/.bin/babel-node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -43,6 +43,7 @@
     "zombie": "^4.2.1"
   },
   "dependencies": {
+    "babel": "^6.5.2",
     "babel-cli": "^6.6.5",
     "babel-plugin-transform-es2015-modules-systemjs": "^6.6.5",
     "babelify": "^7.2.0",
