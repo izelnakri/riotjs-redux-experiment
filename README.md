@@ -8,7 +8,7 @@ iz namespace is used. For example: ``` <iz-rating-list /> ```
 
 All the css is component specific, bootstrap has been used to its full power.
 
-- ``` npm install gulp riot sequelize-cli babel-cli browserify -g ```
+- ``` npm install gulp riot sequelize-cli browserify -g ```
 
 - ``` npm install ```
 
@@ -35,29 +35,20 @@ TODO:
 - optimize the gulp build process
 - maybe add 'selectors' for Redux
 
-
-jspm install npm:lodash, npm:jquery, npm:chart.js, bootstrap.js, moment.js
-
 some other things I might do in future:
 - form validations
-- store changes
 - tests (unit test on the store, API test)
-- multiple data set req integration from a server
 - form generation from js
 - front-end copy + expression read
 - copy sharing = backend / frontend / multi-lang
-- async load order, ES6 imports, babel transpiling(maybe)
+- async load order
 - real-time comm. (socket.io)
-- error reporting
-- debugging
-- Object observer (if needed)
-- multi-auth (fb/twitter etc)
+- error reporting(needs Raven)
+- multi-auth (fb/twitter etc) - OAuth
 - styleguide
 - rake routes and schema.rb functionality to the backend
-- deployment(probably capistrano)
+- deployment(probably capistrano), heroku deployment works
 - api-serializer (maybe) + json+hal
 - backend caching with redis smt like fresh_when
-- multiple login - OAuth
-- maybe nodemon with babel in future
 
 maybe turn /pages into /apps
