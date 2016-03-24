@@ -2,6 +2,7 @@ require('../models');
 
 var express = require('express'),
     router = express.Router(),
+    path = require('path'),
     _ = require('lodash');
 
 router.use('/', express.static('public'));
@@ -12,8 +13,8 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/data.json', (req, res) => {
-    res.sendFile(__dirname + '/data.json');
+router.get('/feedbacks', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/data.json'));
 });
 
 router.post('/login', (req, res) => {

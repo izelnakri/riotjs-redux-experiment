@@ -4,7 +4,8 @@
   "description": "",
   "main": "Gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "babel-node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "jasmine": "^2.4.1",
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0",
+    "jspm": "^0.16.31",
     "karma": "^0.13.21",
     "karma-chrome-launcher": "^0.2.2",
     "karma-jasmine": "^0.3.7",
@@ -35,18 +37,36 @@
     "mocha-generators": "^1.2.0",
     "morgan": "^1.7.0",
     "nightmare": "^2.2.0",
+    "redux": "^3.3.1",
     "run-sequence": "^1.1.5",
     "zombie": "^4.2.1"
   },
   "dependencies": {
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.6.5",
+    "babelify": "^7.2.0",
     "bcrypt": "^0.8.5",
+    "browserify": "^13.0.0",
     "colors": "^1.1.2",
+    "compression": "^1.6.1",
     "ect": "^0.5.9",
     "express": "^4.13.4",
+    "gulp-browserify": "^0.5.1",
+    "gulp-sourcemaps": "^1.6.0",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",
+    "redux-form": "^4.2.2",
+    "redux-localstorage": "^0.4.0",
+    "redux-logger": "^2.6.1",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.0.1",
+    "redux-undo": "^1.0.0-beta3",
+    "reselect": "^2.2.1",
     "riot": "^2.3.16",
     "sequelize": "^3.19.3",
-    "sequelize-cli": "^2.3.1"
+    "sequelize-cli": "^2.3.1",
+    "systemjs": "^0.19.24",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "webpack-stream": "^3.1.0"
   }
 }

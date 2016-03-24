@@ -11,12 +11,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr each={item in ratings}>
+            <tr each={rating in store.feedbacks.ratings}>
                 <td>
-                    <span class="badge">{ item[0].rating }</span> { getRating(item[0].rating) }
+                    <span class="badge">{ rating }</span> { getFeedbackType(rating) }
                 </td>
                 <td align="right">
-                    <span>{ item.length }</span>
+                    <span>{ getFeedbackAmount(rating) }</span>
                 </td>
             </tr>
         </tbody>
@@ -26,17 +26,19 @@
         // REFACTOR the getJSON and better data-structure get/set
         var self = this;
 
-        self.ratings = [[], [], [], [], []];
+        self.mixin('store');
+
+        // self.ratings = [[], [], [], [], []];
 
         self.on('mount', function () {
-            _.each(store['items'], function(item) {
-                self.ratings[item.rating - 1].push(item);
-            });
+            // _.each(self.store.items, function(item) {
+            //     self.ratings[item.rating - 1].push(item);
+            // });
 
             self.update();
         });
 
-        self.getRating = function (ratingValue) {
+        self.getFeedbackType = function (ratingValue) {
             switch(ratingValue) {
                 case 1: return 'Very Bad';
                 case 2: return 'Bad';
@@ -44,6 +46,12 @@
                 case 4: return 'Good';
                 case 5: return 'Amazing!';
             }
+        };
+
+        self.getFeedbackAmount = function (ratingValue) {
+            return _.filter(self.store.feedbacks.items, function (feedback) {
+                return feedback.rating === ratingValue;
+            }).length;
         };
     </script>
 

@@ -3,19 +3,16 @@
     <canvas class="hidden-sm hidden-md hidden-lg"></canvas>
 
     <script>
-        // store['items'] is actual store
-
         var self = this;
 
-        self.items = _.sortBy(store['items'], function(item) {
-            return item.creation_date;
-        });
+        self.mixin('store');
 
-        self.drawChart = function (context, items, options) {
-            var dates = _.map(items, function (item) {
+        self.drawChart = function (context, options) {
+            // make this from the store:
+            var dates = _.map(self.store.feedbacks.items, function (item) {
                     return moment(item.creation_date).format('h:mm a');
                 }),
-                ratings = _.map(items, function (item) {
+                ratings = _.map(self.store.feedbacks.items, function (item) {
                     return item.rating;
                 });
 
@@ -48,7 +45,7 @@
                 var context = self.root.querySelector('canvas.hidden-xs')
                                 .getContext("2d");
 
-                self.drawChart(context, self.items);
+                self.drawChart(context);
             }
 
             self.update();
@@ -60,16 +57,25 @@
                 var context = self.root.querySelector('canvas.hidden-md')
                                 .getContext("2d");
 
-                self.drawChart(context, self.items, { showScale: false });
+                self.drawChart(context, { showScale: false });
             }
 
             self.update();
         };
 
-        self.on('mount', function () {
-            self.drawDesktopChart();
-            self.drawMobileChart();
+        self.on('update', function () {
+            console.log(self);
+            if (self.store && self.store.feedbacks) {
+                console.log(self.store.feedbacks);
+                console.log('this is called');
+                self.drawDesktopChart();
+                self.drawMobileChart();
+            }
         });
+
+        // self.on('mount', function() {
+        //     dispatch(actions.fetchFeedbacksIfNeeded());
+        // });
 
     </script>
 </iz-rating-chart>

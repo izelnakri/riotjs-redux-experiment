@@ -22,7 +22,7 @@
                         <td>Platform</td>
                     </tr>
                 </thead>
-                <tbody each={item in items}>
+                <tbody each={item in store.feedbacks.items}>
                     <tr>
                         <td class="hidden-sm hidden-lg hidden-md">
                             Feedback
@@ -67,24 +67,28 @@
     <script>
         var self = this;
 
+        self.mixin('store');
+
+        // THIS IS AN INTERESTING PROBLEM = CHECK HOW TO DO THIS WITH THE STORE:
+
         self.toggleRating = function (event) {
             // there is a bug here in one of the lodash funct is wrong:
 
             var ratingNo = event.item.number,
-                displayed = _.find(self.items, function(item) {
+                displayed = _.find(self.store.feedbacks.items, function(item) {
                     return item.rating === ratingNo;
                 });
 
             $(event.currentTarget).toggleClass('iz-toggled');
 
             if (displayed) {
-                self.items = _.reject(self.items, function (item) {
+                self.items = _.reject(self.store.feedbacks.items, function (item) {
                     return item.rating === ratingNo;
                 });
                 return self.update();
             }
 
-            var ratingItems = _.filter(store['items'], function (item) {
+            var ratingItems = _.filter(self.store.items, function (item) {
                 return item.rating === ratingNo;
             });
 
@@ -106,7 +110,6 @@
         };
 
         self.on('mount', function () {
-            self.items = store['items'];
             self.update();
         });
     </script>

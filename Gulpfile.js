@@ -1,8 +1,12 @@
 'use strict';
 
 var gulp = require('gulp'),
-    concat = require('gulp-concat'),
+    babelify = require('babelify'),
+    browserify = require('browserify'),
+    buffer = require('vinyl-buffer'),
+    source = require('vinyl-source-stream'),
     sourcemaps = require('gulp-sourcemaps'),
+    concat = require('gulp-concat'),
     sass = require('gulp-sass'),
     cssMinify = require('gulp-cssnano'),
     cssPrefix = require('gulp-autoprefixer'),
@@ -20,7 +24,6 @@ var gulp = require('gulp'),
     // maybe add gulp notify and gulpif
 
 // for js: sourcemaps, uglify, jshint, plumber, maybe babel
-// for js: require, riotjs
 
 // maybe add usage:
 // maybe - dev mode assignment logic via yargs, build.js
@@ -29,17 +32,18 @@ var JS_VENDORS = [
     'frontend/js/vendor/riot+compiler.js',
     'frontend/js/vendor/chart.js',
     'frontend/js/vendor/jquery.js',
-    'frontend/js/vendor/redux.js',
     'frontend/js/vendor/bootstrap.js',
+    'frontend/js/vendor/redux.js',
+    'frontend/js/vendor/fetch.js',
     'frontend/js/vendor/lodash.js',
     'frontend/js/vendor/moment.js'
     ],
+    COMPONENTS_PATH = 'frontend/js/components/*.tag',
+    PAGES_PATH = 'frontend/js/pages/*.tag',
     CONSTANTS_PATH = 'frontend/js/constants/*.js',
     ACTIONS_PATH = 'frontend/js/actions/*.js',
     REDUCERS_PATH = 'frontend/js/reducers/*.js',
-    API_PATH = 'frontend/js/api/*.js',
-    COMPONENTS_PATH = 'frontend/js/components/*.tag',
-    PAGES_PATH = 'frontend/js/pages/*.tag';
+    API_PATH = 'frontend/js/api/*.js';
 
 gulp.task('scss', function () {
     return gulp.src('frontend/scss/application.scss')
@@ -59,16 +63,8 @@ gulp.task('scss', function () {
 gulp.task('js:vendor', function () {
     return gulp.src(JS_VENDORS)
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('tmp/js'));
+        .pipe(gulp.dest('public/js'));
 });
-
-
-// reducers and actions use the constants
-
-// components use the actions
-
-// js:reducers index should import them all the reducers then .combineReducers
-
 
 gulp.task('js:components:lint', function () {
     return gulp.src(COMPONENTS_PATH)
@@ -114,23 +110,26 @@ gulp.task('js:pages', function (callback) {
     runSequence('js:pages:shell', callback);
 });
 
-gulp.task('js:redux', function () {
-    return gulp.src([CONSTANTS_PATH, ACTIONS_PATH, REDUCERS_PATH, API_PATH])
-        .pipe(sourcemaps.init())
-        .pipe(babel())
+gulp.task('js:riot:compile', ['js:components', 'js:pages'], function() {
+    return gulp.src(['tmp/js/components.js', 'tmp/js/pages.js'])
         .pipe(uglify())
-        .pipe(concat('store.js'))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('tmp/js'));
+        .pipe(concat('views.js'))
+        .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('js:compile', ['js:vendor', 'js:redux', 'js:components', 'js:pages'], function () {
-    return gulp.src([
-        'tmp/js/vendor.js', 'tmp/js/store.js','tmp/js/components.js',
-        'tmp/js/pages.js', 'frontend/js/app.js'
-        ])
-        .pipe(uglify())
-        .pipe(concat('application.js'))
+gulp.task('js:compile', function() {
+    var bundler = browserify({
+        entries: 'frontend/js/app.js',
+        debug: true
+    });
+    bundler.transform(babelify);
+    bundler.bundle()
+        .on('error', function (err) { console.error(err); })
+        .pipe(source('app.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(uglify()) // Use any gulp plugins you want now
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('public/js'));
 });
 
@@ -153,13 +152,15 @@ gulp.task('test:unit', function () {
 //   }, done).start();
 // });
 
-gulp.task('watch', ['scss', 'js:compile'], function () {
+gulp.task('watch', ['scss', 'js:vendor', 'js:riot:compile', 'js:compile'], function () {
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
-    gulp.watch(COMPONENTS_PATH, ['js:compile']);
-    gulp.watch(PAGES_PATH, ['js:compile']);
+    gulp.watch(COMPONENTS_PATH, ['js:riot:compile']);
+    gulp.watch(PAGES_PATH, ['js:riot:compile']);
     gulp.watch(CONSTANTS_PATH, ['js:compile']);
     gulp.watch(ACTIONS_PATH, ['js:compile']);
     gulp.watch(REDUCERS_PATH, ['js:compile']);
     gulp.watch(API_PATH, ['js:compile']);
     gulp.watch('frontend/js/app.js', ['js:compile']);
+    gulp.watch('frontend/js/store.js', ['js:compile']);
+    gulp.watch('frontend/js/initializer.js', ['js:compile']);
 });
