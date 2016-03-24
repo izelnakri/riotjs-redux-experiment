@@ -43,6 +43,7 @@
     "zombie": "^4.2.1"
   },
   "dependencies": {
+    "babel-cli": "^6.6.5",
     "babel-plugin-transform-es2015-modules-systemjs": "^6.6.5",
     "babelify": "^7.2.0",
     "bcrypt": "^0.8.5",
@@ -53,10 +54,9 @@
     "express": "^4.13.4",
     "gulp-browserify": "^0.5.1",
     "gulp-sourcemaps": "^1.6.0",
+    "node-babel": "^0.1.2",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",
-    "redux-form": "^4.2.2",
-    "redux-localstorage": "^0.4.0",
     "redux-logger": "^2.6.1",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.0.1",
