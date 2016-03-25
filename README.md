@@ -27,13 +27,11 @@ FOR UNIT TESTS:
 - ``` sequelize db:migrate --env=test ```
 
 TODO:
-- remove redundant package.json dependencies, check them for README
+- test that store change should update selector
+- remove redundant package.json dependencies, check them for README(git clone from VPS and check everything)
 - find the redux-form and redux-localstorage solution without react
-- nodemon to restart process on every change
 - make sourcemaps work for js + css
-- make Object.assign + optional parameters work with Babel
 - optimize the gulp build process
-- maybe add 'selectors' for Redux
 
 some other things I might do in future:
 - form validations

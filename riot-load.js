@@ -2,7 +2,7 @@ global._ = require('lodash');
 
 import * as actions from './frontend/js/actions';
 import * as reducers from './frontend/js/reducers';
-import * as selectors from './frontend/js/selector'; // might be unnecessary
+import * as selectors from './frontend/js/selectors'; // might be unnecessary
 
 global.actions = actions;
 global.reducers = reducers;
