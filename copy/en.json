@@ -12,11 +12,11 @@
         "selected_feedbacks": [
             {
                 "expression": "selected_feedbacks === '3'",
-                "value": ""
+                "value": "selected feedback is {{selected_feedbacks}}"
             },
             {
                 "expression": "selected_feedbacks === '5'",
-                "value": ""
+                "value": "selected feeedback is 5"
             },
             {
                 "expression": "true",

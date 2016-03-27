@@ -35,6 +35,7 @@ TODO:
 - optimize the gulp build process
 
 some other things I might do in future:
+- lazy loading scripts, and scripts based on lazy-loading
 - form validations
 - tests (unit test on the store, API test)
 - form generation from js

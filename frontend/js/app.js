@@ -1,4 +1,5 @@
 import './store.js';
+import './copy.js';
 
 window.App = {};
 
@@ -73,43 +74,3 @@ var AppInitializer = (function () {
 
     return {};
 })();
-
-// assign variable to the copy !!
-window.t = function(key, expression) {
-    //locale set will be via store
-    var locale = "en";
-
-    var langs = {
-      "en": {
-          "hello_world": "Hello world!",
-          "user": {
-              "name": "Izel",
-              "full_name": "Nakri",
-              "memberships": {
-                  "first": "Illuminati",
-                  "second": "Secret Club"
-              }
-          },
-          "selected_feedbacks": { // turn this to array in JSON
-              "0": [
-                  {
-                      "expression": "selected_feedbacks === '3'",
-                      "value": ""
-                  }
-              ],
-              "1": {
-
-              }
-          }
-      },
-      "ja": {
-          "hello_world": "こんにちは世界!"
-      }
-    };
-
-    return langs[locale][key];
-
-    // add angular $parse;
-
-    // . notation in the string, accept expressions
-};

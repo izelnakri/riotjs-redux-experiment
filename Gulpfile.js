@@ -40,6 +40,8 @@ var JS_VENDORS = [
     'frontend/js/vendor/bootstrap.js',
     'frontend/js/vendor/redux.js',
     'frontend/js/vendor/fetch.js',
+    'frontend/js/vendor/ngParser.js',
+    'frontend/js/vendor/mustache.js',
     'frontend/js/vendor/lodash.js',
     'frontend/js/vendor/moment.js'
     ],
@@ -87,15 +89,14 @@ gulp.task('js:copy', ['js:copy:lint'], function() {
     // this should be done on server when it gets huge
     var lang = {},
         dist = './public/js/copy.js';
-    fs.readdirSync('./copy').filter(function(file) {
-        return file.slice(-5) === '.json'; // return only .json
-    }).forEach(function(file) {
-        var content = fs.readFileSync('./copy/' + file, {encoding: 'utf8'});
+    fs.readdirSync('./copy').filter(function(fileName) {
+        return fileName.slice(-5) === '.json'; // return only .json
+    }).forEach(function(fileName) {
+        var content = fs.readFileSync('./copy/' + fileName, {encoding: 'utf8'});
         _.extend(lang, JSON.parse(content)); //add the file to lang js object
     });
 
-
-    fs.writeFileSync(dist, "window.lang = " + util.inspect(lang) + ";");
+    fs.writeFileSync(dist, "window.lang = " + util.inspect(lang, {depth: null}) + ";");
     return gulp.src(dist)
             .pipe(size({ title: 'copy.js' }));
 });
@@ -188,7 +189,7 @@ gulp.task('test:unit', function () {
 //   }, done).start();
 // });
 
-gulp.task('watch', ['scss', 'js:vendor', 'js:riot:compile', 'js:compile'], function () {
+gulp.task('watch', ['scss', 'js:copy', 'js:vendor', 'js:riot:compile', 'js:compile'], function () {
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
     gulp.watch(COMPONENTS_PATH, ['js:riot:compile']);
     gulp.watch(PAGES_PATH, ['js:riot:compile']);
@@ -197,7 +198,9 @@ gulp.task('watch', ['scss', 'js:vendor', 'js:riot:compile', 'js:compile'], funct
     gulp.watch(REDUCERS_PATH, ['js:compile']);
     gulp.watch(API_PATH, ['js:compile']);
     gulp.watch(SELECTORS_PATH, ['js:compile']);
-    gulp.watch('frontend/js/app.js', ['js:compile']);
+    gulp.watch(COPY_PATH, ['js:copy']);
+    gulp.watch('frontend/js/copy.js', ['js:compile']);
     gulp.watch('frontend/js/store.js', ['js:compile']);
     gulp.watch('frontend/js/initializer.js', ['js:compile']);
+    gulp.watch('frontend/js/app.js', ['js:compile']);
 });
