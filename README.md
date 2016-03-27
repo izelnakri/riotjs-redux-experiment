@@ -27,6 +27,7 @@ FOR UNIT TESTS:
 - ``` sequelize db:migrate --env=test ```
 
 TODO:
+- use ngParse for copy: https://github.com/rodyhaddad/ngParser.js/blob/master/dist/ngParser.min.js
 - test that store change should update selector
 - remove redundant package.json dependencies, check them for README(git clone from VPS and check everything)
 - find the redux-form and redux-localstorage solution without react

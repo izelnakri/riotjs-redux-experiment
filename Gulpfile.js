@@ -1,25 +1,30 @@
 'use strict';
 
-var gulp = require('gulp'),
+var fs = require('fs'),
+    util = require('util'),
+    _ = require('lodash'),
+    gulp = require('gulp'),
     babelify = require('babelify'),
     browserify = require('browserify'),
-    buffer = require('vinyl-buffer'),
-    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'), // check if needed
+    source = require('vinyl-source-stream'), // check if needed
     sourcemaps = require('gulp-sourcemaps'),
     concat = require('gulp-concat'),
     sass = require('gulp-sass'),
     cssMinify = require('gulp-cssnano'),
     cssPrefix = require('gulp-autoprefixer'),
-    babel = require('gulp-babel'),
     uglify = require('gulp-uglify'),
+    size = require('gulp-size'),
     jshint = require('gulp-jshint'),
     jshintStylish = require('jshint-stylish'),
+    jsonlint = require("gulp-jsonlint"),
     shell = require('gulp-shell'),
     runSequence = require('run-sequence'),
-    Server = require('karma').Server,
     runMocha = require('gulp-mocha');
+    // Server = require('karma').Server;
 
     // plumber = require('gulp-plumber'),
+    // maybe gulp-notify
     // sourcemaps = require('gulp-sourcemaps'),
     // maybe add gulp notify and gulpif
 
@@ -44,7 +49,8 @@ var JS_VENDORS = [
     ACTIONS_PATH = 'frontend/js/actions/*.js',
     REDUCERS_PATH = 'frontend/js/reducers/*.js',
     SELECTORS_PATH = 'frontend/js/selectors/*.js',
-    API_PATH = 'frontend/js/api/*.js';
+    API_PATH = 'frontend/js/api/*.js',
+    COPY_PATH = 'copy/*.json';
 
 gulp.task('scss', function () {
     return gulp.src('frontend/scss/application.scss')
@@ -61,10 +67,37 @@ gulp.task('scss', function () {
         .pipe(gulp.dest('public/css'));
 });
 
-gulp.task('js:vendor', function () {
+gulp.task('js:vendor', function() {
     return gulp.src(JS_VENDORS)
         .pipe(concat('vendor.js'))
+        .pipe(size({ title: 'vendor.js' }))
         .pipe(gulp.dest('public/js'));
+});
+
+gulp.task('js:copy:lint', function() {
+    return gulp.src(COPY_PATH)
+        .pipe(jsonlint())
+        .pipe(jsonlint.reporter())
+        .pipe(jsonlint.failOnError());
+});
+
+gulp.task('js:copy', ['js:copy:lint'], function() {
+    // possible improvements:
+    // compare different langs for key mismatch warn them in build process!!
+    // this should be done on server when it gets huge
+    var lang = {},
+        dist = './public/js/copy.js';
+    fs.readdirSync('./copy').filter(function(file) {
+        return file.slice(-5) === '.json'; // return only .json
+    }).forEach(function(file) {
+        var content = fs.readFileSync('./copy/' + file, {encoding: 'utf8'});
+        _.extend(lang, JSON.parse(content)); //add the file to lang js object
+    });
+
+
+    fs.writeFileSync(dist, "window.lang = " + util.inspect(lang) + ";");
+    return gulp.src(dist)
+            .pipe(size({ title: 'copy.js' }));
 });
 
 gulp.task('js:components:lint', function () {
@@ -115,6 +148,7 @@ gulp.task('js:riot:compile', ['js:components', 'js:pages'], function() {
     return gulp.src(['tmp/js/components.js', 'tmp/js/pages.js'])
         .pipe(uglify())
         .pipe(concat('views.js'))
+        .pipe(size({ title: 'views.js' }))
         .pipe(gulp.dest('public/js'));
 });
 
@@ -130,6 +164,7 @@ gulp.task('js:compile', function() {
         .pipe(buffer())
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(uglify()) // Use any gulp plugins you want now
+        .pipe(size({ title: 'app.js' }))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('public/js'));
 });
