@@ -39,47 +39,6 @@
     <% end %>
 
 
-    <script src="/js/system.js"></script>
-    <script>
-    System.config({
-        baseURL: '/',
-        map: {
-            jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js',
-            webfont: '//ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js',
-            lodash: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js',
-            riot: '//cdnjs.cloudflare.com/ajax/libs/riot/2.3.17/riot+compiler.min.js',
-            views: '/js/views.js',
-            chart: '//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js',
-            copy: '/js/copy.js',
-            moment: '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js',
-            vendor: '/js/vendor.js',
-            app: '/js/app.js'
-        },
-        meta: {
-            vendor: {
-                'format': 'global'
-            },
-            riot: {
-                'format': 'global'
-            },
-            views: {
-                'format': 'global',
-                deps: 'riot'
-            },
-            moment: {
-                'format': 'global'
-            },
-            app: {
-                deps: ['jquery', 'lodash', 'riot', 'views', 'chart', 'copy', 'moment',
-                'vendor']
-            }
-        }
-    });
-
-    System.import('app').then(function(app) {
-        console.log(app);
-        console.log('app is loaded');
-    });
-    </script>
+    <script src="/js/system.js" async="true"></script>
   </body>
 </html>

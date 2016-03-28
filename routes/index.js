@@ -3,7 +3,7 @@
 var express = require('express'),
     router = express.Router();
 
-router.use('/', express.static('public'));
+router.use('/', express.static('public', { maxAge: 86400000 }));
 
 router.get('/register', (req, res) => {
     res.send(

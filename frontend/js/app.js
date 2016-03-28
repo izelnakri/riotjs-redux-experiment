@@ -11,9 +11,7 @@ App.routesLoad = function () {
 
     riot.route('/', function() {
         riot.visit('index');
-        fetch('/api/feedbacks')
-              .then(response => response.json())
-              .then(json => Store.dispatch(actions.fetchFeedbacksIfNeeded(json)));
+        Store.dispatch(actions.fetchFeedbacksIfNeeded());
         console.log('root route is called');
     });
 
@@ -66,12 +64,4 @@ App.routesLoad = function () {
     App.routesLoad = function(){}; // so nobody can call it again
 };
 
-var AppInitializer = (function () {
-    $.getJSON('/api/feedbacks').then(function (data) {
-        // window.store.feedbacks = data;
-        riot.mount('*');
-        App.routesLoad();
-    });
-
-    return {};
-})();
+App.routesLoad();

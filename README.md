@@ -36,17 +36,15 @@ TODO:
 some other things I might do in future:
 - copy sharing = backend / frontend / multi-lang
 - fingerprinting for assets(so very long cache durations)
-- lazy loading scripts, and scripts based on lazy-loading
+- deployment(probably capistrano), heroku deployment works
 - form validations
 - tests (unit test on the store, API test)
 - form generation from js
-- async load order
 - real-time comm. (socket.io)
 - error reporting(needs Raven)
 - multi-auth (fb/twitter etc) - OAuth
 - styleguide
 - rake routes and schema.rb functionality to the backend
-- deployment(probably capistrano), heroku deployment works
 - api-serializer (maybe) + json+hal
 - backend caching with redis smt like fresh_when
 
