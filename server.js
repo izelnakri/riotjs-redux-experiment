@@ -21,6 +21,8 @@ if (process.env['NODE_ENV'] === 'production') {
     app.use(morgan('dev'));
 }
 
+app.use('/', express.static('frontend/js/vendor'));
+
 app.set('view engine', 'ect');
 app.engine('ect', ect.render);
 

@@ -27,7 +27,6 @@ FOR UNIT TESTS:
 - ``` sequelize db:migrate --env=test ```
 
 TODO:
-- use ngParse for copy: https://github.com/rodyhaddad/ngParser.js/blob/master/dist/ngParser.min.js
 - test that store change should update selector
 - remove redundant package.json dependencies, check them for README(git clone from VPS and check everything)
 - find the redux-form and redux-localstorage solution without react
@@ -35,12 +34,12 @@ TODO:
 - optimize the gulp build process
 
 some other things I might do in future:
+- copy sharing = backend / frontend / multi-lang
+- fingerprinting for assets(so very long cache durations)
 - lazy loading scripts, and scripts based on lazy-loading
 - form validations
 - tests (unit test on the store, API test)
 - form generation from js
-- front-end copy + expression read
-- copy sharing = backend / frontend / multi-lang
 - async load order
 - real-time comm. (socket.io)
 - error reporting(needs Raven)

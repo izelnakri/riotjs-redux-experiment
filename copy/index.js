@@ -1,12 +1,4 @@
-export function t(key, locale) {
-    if (!locale) { locale = 'en'; }
+// import ngParser and Mustache
+// import json files to the lang object
 
-    var langs = {
-      "en": { "hello_world": "Hello world!" },
-      "ja": { "hello_world": "こんにちは世界!" }
-    };
-
-    return langs[locale][key];
-
-    // . notation in the string, accept expressions
-}
+// import the t function

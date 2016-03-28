@@ -1,10 +1,16 @@
 window.$parse = ngParser;
 
 window.t = function(key, locals) {
-    // this function is half-finished, still work in progress
+    // this function is unstable, still work in progress
+    // accept markdown?
     // google this: dot notation on a string:
     var locale = "en", // this will be dynamic from the store for example
         value = lang[locale][key];
+
+    if (_.isUndefined(value)) {
+        console.warn('Copy not found, unknown key ' + key);
+        return;
+    }
 
     if (_.isArray(value)) {
         if (value[0].expression) {
@@ -31,6 +37,7 @@ window.t = function(key, locals) {
             return compileString(targetObject.value); //(locals);
         }
 
+        console.warn('Array without expression requested for copy key: ' + key);
         return '';
     } else if (_.isObject(value)) {
         if (value.expression) {
@@ -39,6 +46,9 @@ window.t = function(key, locals) {
             }
             return '';
         }
+
+        console.warn('Object without expression requested for copy key: ' + key);
+        return '';
     }
 
     return compileString(value);
@@ -50,8 +60,6 @@ window.t = function(key, locals) {
     function compileString(target) {
         return Mustache.render(target, _.merge(Store.getState(), locals));
     }
-
-    // add copy couldn't find found
 
     // . notation in the string
 };

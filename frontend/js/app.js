@@ -1,3 +1,4 @@
+// jquery, lodash, riot, views, chart, copy
 import './store.js';
 import './copy.js';
 

@@ -33,17 +33,13 @@ var fs = require('fs'),
 // maybe add usage:
 // maybe - dev mode assignment logic via yargs, build.js
 
+// create gulp js:plugins task
+
 var JS_VENDORS = [
-    'frontend/js/vendor/riot+compiler.js',
-    'frontend/js/vendor/chart.js',
-    'frontend/js/vendor/jquery.js',
-    'frontend/js/vendor/bootstrap.js',
     'frontend/js/vendor/redux.js',
     'frontend/js/vendor/fetch.js',
     'frontend/js/vendor/ngParser.js',
-    'frontend/js/vendor/mustache.js',
-    'frontend/js/vendor/lodash.js',
-    'frontend/js/vendor/moment.js'
+    'frontend/js/vendor/mustache.js'
     ],
     COMPONENTS_PATH = 'frontend/js/components/*.tag',
     PAGES_PATH = 'frontend/js/pages/*.tag',
@@ -80,7 +76,7 @@ gulp.task('js:copy:lint', function() {
     return gulp.src(COPY_PATH)
         .pipe(jsonlint())
         .pipe(jsonlint.reporter())
-        .pipe(jsonlint.failOnError());
+        .pipe(jsonlint.failAfterError());
 });
 
 gulp.task('js:copy', ['js:copy:lint'], function() {
