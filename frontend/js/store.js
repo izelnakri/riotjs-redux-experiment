@@ -6,6 +6,14 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 // REDUX HERE ==========================================
 //normalizr and camelCase libraries
+Raven.config('https://0d07aee195e54fb3b27eca52d653976a@app.getsentry.com/72051').install();
+window.onunhandledrejection = function(evt) {
+    Raven.captureException(evt.reason, {
+        extra: {
+            state: Store.getState()
+        }
+    });
+};
 
 var initialState = {
     todosVisibilityFilter: 'SHOW_ALL',
@@ -47,12 +55,12 @@ const crashReporter = store => next => action => {
         return next(action);
     } catch (err) {
         console.error('Caught an exception!', err);
-        // Raven.captureException(err, {
-        //   extra: {
-        //     action,
-        //     state: store.getState()
-        //   }
-        // });
+        Raven.captureException(err, {
+          extra: {
+            action: action,
+            state: store.getState()
+          }
+        });
         throw err;
     }
 };

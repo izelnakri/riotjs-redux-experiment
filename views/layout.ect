@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="120x120" href="">
     <link rel="apple-touch-icon" sizes="152x152" href="/"> -->
 
-    <link rel="stylesheet" media="all" href="/css/application.css">
+    <link rel="stylesheet" media="all" href="/css/<%- assets['application.css'] %>">
   </head>
   <body>
     <% if @header : %>
@@ -38,7 +38,46 @@
       <iz-footer></iz-footer>
     <% end %>
 
+    <script src="/js/system.js"></script>
+    <script>
+        System.config({
+            baseURL: '/',
+            map: {
+                jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js',
+                lodash: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js',
+                riot: '//cdnjs.cloudflare.com/ajax/libs/riot/2.3.17/riot+compiler.min.js',
+                vendor: '/js/<%- assets['vendor.js'] %>',
+                plugins: '/js/<%- assets['plugins.js'] %>',
+                views: '/js/<%- assets['views.js'] %>',
+                copy: '/js/<%- assets['copy.js'] %>',
+                app: '/js/<%- assets['app.js'] %>'
+            },
+            meta: {
+                vendor: {
+                    'format': 'global'
+                },
+                views: {
+                    'format': 'global',
+                    deps: 'riot'
+                },
+                riot: {
+                    'format': 'global'
+                },
+                plugins: {
+                    'format': 'global',
+                    deps: 'jquery'
+                },
+                app: {
+                    deps: [
+                    'jquery', 'lodash',  'riot', 'vendor', 'plugins', 'views', 'copy'
+                    ]
+                }
+            }
+        });
 
-    <script src="/js/system.js" async="true"></script>
+        System.import('app').then(function(app) {
+            console.log('App is loaded');
+        });
+    </script>
   </body>
 </html>

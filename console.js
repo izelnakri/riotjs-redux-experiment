@@ -1,6 +1,8 @@
 require('babel-register')({
    presets: [ 'es2015' ]
 });
+global.assets = require('./config/assets.json');
+
 require('./models');
 require('./riot-load');
 

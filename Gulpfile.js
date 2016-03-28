@@ -4,6 +4,8 @@ var fs = require('fs'),
     util = require('util'),
     _ = require('lodash'),
     gulp = require('gulp'),
+    rev = require('gulp-rev'),
+    revDel = require('rev-del'),
     babelify = require('babelify'),
     browserify = require('browserify'),
     buffer = require('vinyl-buffer'), // check if needed
@@ -24,22 +26,22 @@ var fs = require('fs'),
     // Server = require('karma').Server;
 
     // plumber = require('gulp-plumber'),
-    // maybe gulp-notify
-    // sourcemaps = require('gulp-sourcemaps'),
-    // maybe add gulp notify and gulpif
-
-// for js: sourcemaps, uglify, jshint, plumber, maybe babel
+    // maybe add gulp notify
 
 // maybe add usage:
 // maybe - dev mode assignment logic via yargs, build.js
-
-// create gulp js:plugins task
 
 var JS_VENDORS = [
     'frontend/js/vendor/redux.js',
     'frontend/js/vendor/fetch.js',
     'frontend/js/vendor/ngParser.js',
-    'frontend/js/vendor/mustache.js'
+    'frontend/js/vendor/mustache.js',
+    'frontend/js/vendor/chart.js',
+    'frontend/js/vendor/moment.js',
+    'frontend/js/vendor/raven.js'
+    ],
+    JS_PLUGINS = [
+    'frontend/js/vendor/bootstrap.js'
     ],
     COMPONENTS_PATH = 'frontend/js/components/*.tag',
     PAGES_PATH = 'frontend/js/pages/*.tag',
@@ -62,14 +64,52 @@ gulp.task('scss', function () {
         .pipe(cssPrefix())
         .pipe(cssMinify()) // maybe: .pipe(gulpif(!devMode, cssMinify()))
         .pipe(concat('application.css'))
-        .pipe(gulp.dest('public/css'));
+        .pipe(size({ title: 'application.css' }))
+        .pipe(rev())
+        .pipe(gulp.dest('public/css'))
+        .pipe(rev.manifest('config/assets.json', {
+            base: 'config',
+            merge: true
+        }))
+        .pipe(revDel({
+            dest: 'public/css',
+            oldManifest: 'config/assets.json'
+        }))
+        .pipe(gulp.dest('config'));
 });
 
 gulp.task('js:vendor', function() {
     return gulp.src(JS_VENDORS)
         .pipe(concat('vendor.js'))
         .pipe(size({ title: 'vendor.js' }))
-        .pipe(gulp.dest('public/js'));
+        .pipe(rev())
+        .pipe(gulp.dest('public/js'))
+        .pipe(rev.manifest('config/assets.json', {
+            base: 'config',
+            merge: true
+        }))
+        .pipe(revDel({
+            dest: 'public/js',
+            oldManifest: 'config/assets.json'
+        }))
+        .pipe(gulp.dest('config'));
+});
+
+gulp.task('js:plugins', function() {
+    return gulp.src(JS_PLUGINS)
+        .pipe(concat('plugins.js'))
+        .pipe(size({ title: 'plugins.js' }))
+        .pipe(rev())
+        .pipe(gulp.dest('public/js'))
+        .pipe(rev.manifest('config/assets.json', {
+            base: 'config',
+            merge: true
+        }))
+        .pipe(revDel({
+            dest: 'public/js',
+            oldManifest: 'config/assets.json'
+        }))
+        .pipe(gulp.dest('config'));
 });
 
 gulp.task('js:copy:lint', function() {
@@ -84,7 +124,7 @@ gulp.task('js:copy', ['js:copy:lint'], function() {
     // compare different langs for key mismatch warn them in build process!!
     // this should be done on server when it gets huge
     var lang = {},
-        dist = './public/js/copy.js';
+        dist = './tmp/js/copy.js';
     fs.readdirSync('./copy').filter(function(fileName) {
         return fileName.slice(-5) === '.json'; // return only .json
     }).forEach(function(fileName) {
@@ -94,7 +134,18 @@ gulp.task('js:copy', ['js:copy:lint'], function() {
 
     fs.writeFileSync(dist, "window.lang = " + util.inspect(lang, {depth: null}) + ";");
     return gulp.src(dist)
-            .pipe(size({ title: 'copy.js' }));
+            .pipe(size({ title: 'copy.js' }))
+            .pipe(rev())
+            .pipe(gulp.dest('public/js'))
+            .pipe(rev.manifest('config/assets.json', {
+                base: 'config',
+                merge: true
+            }))
+            .pipe(revDel({
+                dest: 'public/js',
+                oldManifest: 'config/assets.json'
+            }))
+            .pipe(gulp.dest('config'));
 });
 
 gulp.task('js:components:lint', function () {
@@ -146,7 +197,17 @@ gulp.task('js:riot:compile', ['js:components', 'js:pages'], function() {
         .pipe(uglify())
         .pipe(concat('views.js'))
         .pipe(size({ title: 'views.js' }))
-        .pipe(gulp.dest('public/js'));
+        .pipe(rev())
+        .pipe(gulp.dest('public/js'))
+        .pipe(rev.manifest('config/assets.json', {
+            base: 'config',
+            merge: true
+        }))
+        .pipe(revDel({
+            dest: 'public/js',
+            oldManifest: 'config/assets.json'
+        }))
+        .pipe(gulp.dest('config'));
 });
 
 gulp.task('js:compile', function() {
@@ -162,8 +223,18 @@ gulp.task('js:compile', function() {
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(uglify()) // Use any gulp plugins you want now
         .pipe(size({ title: 'app.js' }))
+        .pipe(rev())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('public/js'))
+        .pipe(rev.manifest('config/assets.json', {
+            base: 'config',
+            merge: true
+        }))
+        .pipe(revDel({
+            dest: 'public/js',
+            oldManifest: 'config/assets.json'
+        }))
+        .pipe(gulp.dest('config'));
 });
 
 gulp.task('test:components', function () {
@@ -185,7 +256,19 @@ gulp.task('test:unit', function () {
 //   }, done).start();
 // });
 
-gulp.task('watch', ['scss', 'js:copy', 'js:vendor', 'js:riot:compile', 'js:compile'], function () {
+gulp.task('compile', function () {
+    return runSequence(
+        'scss', 'js:copy', 'js:vendor', 'js:plugins', 'js:riot:compile',
+        'js:compile'
+    );
+});
+
+gulp.task('watch', function() {
+    runSequence(
+        'scss', 'js:copy', 'js:vendor', 'js:plugins', 'js:riot:compile',
+        'js:compile'
+    );
+
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
     gulp.watch(COMPONENTS_PATH, ['js:riot:compile']);
     gulp.watch(PAGES_PATH, ['js:riot:compile']);
@@ -195,8 +278,9 @@ gulp.task('watch', ['scss', 'js:copy', 'js:vendor', 'js:riot:compile', 'js:compi
     gulp.watch(API_PATH, ['js:compile']);
     gulp.watch(SELECTORS_PATH, ['js:compile']);
     gulp.watch(COPY_PATH, ['js:copy']);
+    gulp.watch(JS_PLUGINS, ['js:plugins']);
+    gulp.watch(JS_VENDORS, ['js:vendors']);
     gulp.watch('frontend/js/copy.js', ['js:compile']);
     gulp.watch('frontend/js/store.js', ['js:compile']);
-    gulp.watch('frontend/js/initializer.js', ['js:compile']);
     gulp.watch('frontend/js/app.js', ['js:compile']);
 });

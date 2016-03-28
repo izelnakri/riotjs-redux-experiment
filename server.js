@@ -2,6 +2,7 @@ require('babel-register')({
    presets: [ 'es2015' ]
 });
 
+global.assets = require('./config/assets.json');
 require('colors');
 require('./models');
 require('./riot-load');
@@ -11,7 +12,7 @@ var express = require('express'),
     compress = require('compression'),
     morgan = require('morgan'),
     ect = require('ect')({
-        watch: true, root: __dirname + '/views', ext : '.ect'
+        watch: true, root: __dirname + '/views', ext : '.ect', assets: assets
     }),
     port = process.env.PORT || 3000;
 
@@ -29,7 +30,7 @@ app.engine('ect', ect.render);
 var html = require('./routes'),
     api = require('./routes/api');
 
-app.use(compress({ threshhold: 512 }));
+app.use(compress({ threshhold: 31536000 }));
 app.use('/', html);
 app.use('/api', api);
 

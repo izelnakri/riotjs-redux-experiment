@@ -3,7 +3,6 @@ import './store.js';
 import './copy.js';
 
 window.App = {};
-
 App.routesLoad = function () {
     riot.visit = function (pageName, opts) {
         riot.mount('#page', 'page-' + pageName, opts);

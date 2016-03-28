@@ -30,12 +30,9 @@ TODO:
 - test that store change should update selector
 - remove redundant package.json dependencies, check them for README(git clone from VPS and check everything)
 - find the redux-form and redux-localstorage solution without react
-- make sourcemaps work for js + css
-- optimize the gulp build process
 
 some other things I might do in future:
-- copy sharing = backend / frontend / multi-lang
-- fingerprinting for assets(so very long cache durations)
+- copy sharing = backend / frontend / multi-lang | write the logic for ruby
 - deployment(probably capistrano), heroku deployment works
 - form validations
 - tests (unit test on the store, API test)
@@ -47,5 +44,3 @@ some other things I might do in future:
 - rake routes and schema.rb functionality to the backend
 - api-serializer (maybe) + json+hal
 - backend caching with redis smt like fresh_when
-
-maybe turn /pages into /apps
