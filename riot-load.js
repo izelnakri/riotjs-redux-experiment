@@ -11,7 +11,6 @@ global.selectors = selectors; // might be unnecessary
 var fs = require('fs'),
     path = require('path'),
     Redux = require('redux'),
-    _ = require('lodash'),
     riot = require('riot');
 
 global.ect = require('ect')({
@@ -48,7 +47,9 @@ walk(__dirname + '/frontend/js')
             .replace('frontend/js/components/', '').replace('.tag', '');
         console.log(name);
 
-        global.views[name] = require('./' + file);
+        if (name !== 'validator') {
+            global.views[name] = require('./' + file);
+        }
     });
 
 var initialState = {

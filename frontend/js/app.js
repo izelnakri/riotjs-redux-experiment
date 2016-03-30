@@ -3,11 +3,12 @@ import './store.js';
 import './copy.js';
 
 window.App = {};
+asdasd'
+// Parsley.options.namespace = 'parsley-';
 App.routesLoad = function () {
     riot.visit = function (pageName, opts) {
         riot.mount('#page', 'page-' + pageName, opts);
     };
-
     riot.route('/', function() {
         riot.visit('index');
         Store.dispatch(actions.fetchFeedbacksIfNeeded());

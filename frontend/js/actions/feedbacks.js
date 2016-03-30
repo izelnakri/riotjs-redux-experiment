@@ -4,7 +4,6 @@ export function requestFeedbacks() {
     };
 }
 
-
 export function fetchFeedbacks() {
 
     return (dispatch) => {

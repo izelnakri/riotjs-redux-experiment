@@ -8,7 +8,7 @@ iz namespace is used. For example: ``` <iz-rating-list /> ```
 
 All the css is component specific, bootstrap has been used to its full power.
 
-- ``` npm install gulp riot sequelize-cli browserify -g ```
+- ``` npm install gulp riot sequelize-cli browserify nodemon -g ```
 
 - ``` npm install ```
 

@@ -3,6 +3,7 @@
 var fs = require('fs'),
     util = require('util'),
     _ = require('lodash'),
+    colors = require('colors'),
     gulp = require('gulp'),
     rev = require('gulp-rev'),
     revDel = require('rev-del'),
@@ -22,6 +23,7 @@ var fs = require('fs'),
     jsonlint = require("gulp-jsonlint"),
     shell = require('gulp-shell'),
     runSequence = require('run-sequence'),
+    plumber = require('gulp-plumber'),
     runMocha = require('gulp-mocha');
     // Server = require('karma').Server;
 
@@ -41,7 +43,8 @@ var JS_VENDORS = [
     'frontend/js/vendor/raven.js'
     ],
     JS_PLUGINS = [
-    'frontend/js/vendor/bootstrap.js'
+    'frontend/js/vendor/bootstrap.js',
+    'frontend/js/vendor/parsley.js'
     ],
     COMPONENTS_PATH = 'frontend/js/components/*.tag',
     PAGES_PATH = 'frontend/js/pages/*.tag',
@@ -52,8 +55,30 @@ var JS_VENDORS = [
     API_PATH = 'frontend/js/api/*.js',
     COPY_PATH = 'copy/*.json';
 
+var notify = function (errorMessage) {
+    // var message = er.message.replace(__dirname, '.');
+    return function(error) {
+        var message = error.message.replace(__dirname, '.');
+        console.log('plumber error occured '.red + errorMessage.blue + '!');
+        console.log(message.yellow);
+    };
+    // console.log('  ' + message.yellow);
+    //
+    // notifier.notify({
+    //     title: 'build failed',
+    //     subtitle: subtitle,
+    //     message: message,
+    //     appIcon: path.join(__dirname, 'alert-icon.png')
+    // });
+
+};
+
+
 gulp.task('scss', function () {
     return gulp.src('frontend/scss/application.scss')
+        .pipe(plumber({
+            errorHandler: notify('scss error')
+        }))
         .pipe(sass({
             cacheLocation: 'tmp/sass',
             onError: function (errorMessage) {
@@ -114,6 +139,9 @@ gulp.task('js:plugins', function() {
 
 gulp.task('js:copy:lint', function() {
     return gulp.src(COPY_PATH)
+        .pipe(plumber({
+            errorHandler: notify('js:copy error')
+        }))
         .pipe(jsonlint())
         .pipe(jsonlint.reporter())
         .pipe(jsonlint.failAfterError());
@@ -163,6 +191,9 @@ gulp.task('js:components:concat', ['js:components:lint'], function () {
 
 gulp.task('js:components:shell', ['js:components:concat'], function () {
     return gulp.src('tmp/js/components.tag')
+        .pipe(plumber({
+            errorHandler: notify('js:components:shell riot error')
+        }))
         .pipe(shell('riot tmp/js/components.tag tmp/js/components.js --m')); // this is async
 });
 
@@ -185,6 +216,9 @@ gulp.task('js:pages:concat', ['js:pages:lint'], function () {
 
 gulp.task('js:pages:shell', ['js:pages:concat'], function () {
     return gulp.src('tmp/js/pages.tag')
+        .pipe(plumber({
+            errorHandler: notify('js:pages:shell riot error')
+        }))
         .pipe(shell('riot tmp/js/pages.tag tmp/js/pages.js --m')); // this is async
 });
 
@@ -217,7 +251,11 @@ gulp.task('js:compile', function() {
     });
     bundler.transform(babelify);
     bundler.bundle()
-        .on('error', function (err) { console.error(err); })
+        .on('error', function (err) {
+            // this is plumber like error reporting
+            console.log('ERROR OCCURED ON js:compile'.red);
+            console.error(err);
+        })
         .pipe(source('app.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({ loadMaps: true }))
