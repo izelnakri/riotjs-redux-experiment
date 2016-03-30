@@ -1,9 +1,9 @@
 // jquery, lodash, riot, views, chart, copy
 import './store.js';
 import './copy.js';
+import './form-validator';
 
 window.App = {};
-asdasd'
 // Parsley.options.namespace = 'parsley-';
 App.routesLoad = function () {
     riot.visit = function (pageName, opts) {

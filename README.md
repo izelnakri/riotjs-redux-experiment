@@ -18,7 +18,7 @@ Create the models:
 
 - ``` sequelize db:migrate  ```
 
-``` gulp watch ```
+``` gulp watch ``` or ``` gulp compile ``` (for once)
 
 ``` npm run server ```
 
@@ -27,6 +27,8 @@ FOR UNIT TESTS:
 - ``` sequelize db:migrate --env=test ```
 
 TODO:
+- make buttons work, also turn glyphicons to fa- type buttons
+- hacking form validation
 - test that store change should update selector
 - remove redundant package.json dependencies, check them for README(git clone from VPS and check everything)
 - find the redux-form and redux-localstorage solution without react
@@ -35,10 +37,10 @@ some other things I might do in future:
 - copy sharing = backend / frontend / multi-lang | write the logic for ruby
 - deployment(probably capistrano), heroku deployment works
 - form validations
-- tests (unit test on the store, API test)
+- form prefilling
 - form generation from js
+- tests (unit test on the store, API test)
 - real-time comm. (socket.io)
-- error reporting(needs Raven)
 - multi-auth (fb/twitter etc) - OAuth
 - styleguide
 - rake routes and schema.rb functionality to the backend

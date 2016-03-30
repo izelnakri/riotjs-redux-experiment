@@ -27,7 +27,6 @@ var fs = require('fs'),
     runMocha = require('gulp-mocha');
     // Server = require('karma').Server;
 
-    // plumber = require('gulp-plumber'),
     // maybe add gulp notify
 
 // maybe add usage:
@@ -56,21 +55,18 @@ var JS_VENDORS = [
     COPY_PATH = 'copy/*.json';
 
 var notify = function (errorMessage) {
-    // var message = er.message.replace(__dirname, '.');
     return function(error) {
         var message = error.message.replace(__dirname, '.');
         console.log('plumber error occured '.red + errorMessage.blue + '!');
         console.log(message.yellow);
     };
-    // console.log('  ' + message.yellow);
-    //
+
     // notifier.notify({
     //     title: 'build failed',
     //     subtitle: subtitle,
     //     message: message,
     //     appIcon: path.join(__dirname, 'alert-icon.png')
     // });
-
 };
 
 
@@ -228,6 +224,9 @@ gulp.task('js:pages', function (callback) {
 
 gulp.task('js:riot:compile', ['js:components', 'js:pages'], function() {
     return gulp.src(['tmp/js/components.js', 'tmp/js/pages.js'])
+        .pipe(plumber({
+            errorHandler: notify('js:riot:compile js error')
+        }))
         .pipe(uglify())
         .pipe(concat('views.js'))
         .pipe(size({ title: 'views.js' }))
@@ -318,7 +317,5 @@ gulp.task('watch', function() {
     gulp.watch(COPY_PATH, ['js:copy']);
     gulp.watch(JS_PLUGINS, ['js:plugins']);
     gulp.watch(JS_VENDORS, ['js:vendors']);
-    gulp.watch('frontend/js/copy.js', ['js:compile']);
-    gulp.watch('frontend/js/store.js', ['js:compile']);
-    gulp.watch('frontend/js/app.js', ['js:compile']);
+    gulp.watch('frontend/js/*.js', ['js:compile']);
 });

@@ -9,15 +9,15 @@
                 <div class="well">
                     <h4>Login</h4>
                     <hr />
-                    <form>
+                    <form data-is="validator">
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" />
+                            <label class="control-label">Email</label>
+                            <input type="email" class="form-control" required />
                         </div>
 
                         <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" class="form-control" />
+                          <label class="control-label">Password</label>
+                          <input type="password" class="form-control" required />
                         </div>
 
                         <div class="row">

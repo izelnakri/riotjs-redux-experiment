@@ -27,6 +27,7 @@
     "views": true,
     "ngParser": true,
     "Mustache": true,
+    "Parsley": true,
     "lang": true,
     "$parse": true,
     "ect": true,

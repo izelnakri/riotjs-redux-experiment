@@ -11,13 +11,13 @@
                     <hr />
                     <form data-is="validator">
                         <div class="form-group">
-                            <label>Email</label>
+                            <label class="control-label">Email</label>
                             <input type="email" class="form-control" required />
                         </div>
 
                         <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" class="form-control" />
+                          <label class="control-label">Password</label>
+                          <input type="password" class="form-control" required />
                         </div>
 
                         <div class="row">

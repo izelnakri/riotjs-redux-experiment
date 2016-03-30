@@ -1,5 +1,29 @@
 {
     "en": {
+        "parsley": {
+            "defaultMessage": " seems to be invalid.",
+            "type": {
+                "email":        " has to be a valid email.",
+                "url":          " has to be a valid url.",
+                "number":       " has to be a only numbers.",
+                "integer":      " has to be a only integers.",
+                "digits":       " has to be only digits.",
+                "alphanum":     " has to alphanumeric."
+            },
+            "notblank":       " should not be blank.",
+            "required":       " is required.",
+            "pattern":        " seems to be invalid.",
+            "min":            " should be minimum %s.",
+            "max":            " should be maximum %s.",
+            "range":          " should be between %s and %s.",
+            "minlength":      " should be at least %s characters",
+            "maxlength":      " should be maximum %s characters",
+            "length":         " should be between %s and %s characters long.",
+            "mincheck":       " should be at least %s choices.",
+            "maxcheck":       " should be maximum %s choices.",
+            "check":          " should be between %s and %s choices.",
+            "equalto":        "This value should be the same."
+        },
         "hello_world": "Hello world!",
         "user": {
             "name": "Izel",
