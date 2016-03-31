@@ -17,7 +17,7 @@
 
                         <div class="form-group">
                           <label class="control-label">Password</label>
-                          <input type="password" class="form-control" required />
+                          <input type="password" class="form-control" required data-parsley-length="[6, 45]"/>
                         </div>
 
                         <div class="row">

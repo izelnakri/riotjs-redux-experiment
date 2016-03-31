@@ -18,7 +18,7 @@
             "range":          " should be between %s and %s.",
             "minlength":      " should be at least %s characters",
             "maxlength":      " should be maximum %s characters",
-            "length":         " should be between %s and %s characters long.",
+            "length":         " must be between %s and %s characters",
             "mincheck":       " should be at least %s choices.",
             "maxcheck":       " should be maximum %s choices.",
             "check":          " should be between %s and %s choices.",

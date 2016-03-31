@@ -5,8 +5,8 @@ import './form-validator';
 
 window.App = {};
 // Parsley.options.namespace = 'parsley-';
-App.routesLoad = function () {
-    riot.visit = function (pageName, opts) {
+App.routesLoad = (function() {
+    riot.visit = function(pageName, opts) {
         riot.mount('#page', 'page-' + pageName, opts);
     };
     riot.route('/', function() {
@@ -61,7 +61,7 @@ App.routesLoad = function () {
     riot.route.base('/');
     riot.route.start(true);
 
-    App.routesLoad = function(){}; // so nobody can call it again
-};
+    return function(){}; // so nobody can call it again
+}());
 
 App.routesLoad();

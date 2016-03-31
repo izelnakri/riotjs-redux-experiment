@@ -27,9 +27,51 @@
 
     <iz-footer></iz-footer>
 
-    <script src="/js/application.js"></script>
-    <!-- load the other script -->
-    
-    <!-- vendor, components, pages async load -->
+    <script src="/js/system.js"></script>
+    <script>
+        System.config({
+            baseURL: '/',
+            map: {
+                jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js',
+                lodash: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js',
+                riot: '//cdnjs.cloudflare.com/ajax/libs/riot/2.3.17/riot+compiler.min.js',
+                vendor: '/js/<%- assets['vendor.js'] %>',
+                plugins: '/js/<%- assets['plugins.js'] %>',
+                views: '/js/<%- assets['views.js'] %>',
+                copy: '/js/<%- assets['copy.js'] %>',
+                app: '/js/<%- assets['app.js'] %>',
+                styleguide: '/js/styleguide.js'
+            },
+            meta: {
+                vendor: {
+                    'format': 'global'
+                },
+                views: {
+                    'format': 'global',
+                    deps: 'riot'
+                },
+                riot: {
+                    'format': 'global'
+                },
+                plugins: {
+                    'format': 'global',
+                    deps: 'jquery'
+                },
+                styleguide: {
+                    'format': 'global',
+                    deps: 'jquery'
+                },
+                app: {
+                    deps: [
+                    'jquery', 'lodash',  'riot', 'vendor', 'plugins', 'views', 'copy'
+                    ]
+                }
+            }
+        });
+
+        System.import('app').then(function(app) {
+            console.log('App is loaded');
+        });
+    </script>
   </body>
 </html>

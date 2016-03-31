@@ -260,8 +260,8 @@ gulp.task('js:compile', function() {
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(uglify()) // Use any gulp plugins you want now
         .pipe(size({ title: 'app.js' }))
-        .pipe(rev())
         .pipe(sourcemaps.write('./'))
+        .pipe(rev())
         .pipe(gulp.dest('public/js'))
         .pipe(rev.manifest('config/assets.json', {
             base: 'config',
@@ -272,6 +272,7 @@ gulp.task('js:compile', function() {
             oldManifest: 'config/assets.json'
         }))
         .pipe(gulp.dest('config'));
+    // delete the old manifest
 });
 
 gulp.task('test:components', function () {
