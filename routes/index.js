@@ -89,6 +89,51 @@ router.get('/counter', (req, res) => {
     );
 });
 
+
+router.get('/register', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['register']),
+            footer: riot.render(views['footer'])
+        })
+    );
+});
+
+router.get('/styleguide', (req, res) => {
+    res.render('styleguide/components');
+});
+
+router.get('/styleguide/foundation', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['register']),
+            footer: riot.render(views['footer'])
+        })
+    );
+});
+
+router.get('/styleguide/components', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['register']),
+            footer: riot.render(views['footer'])
+        })
+    );
+});
+
+router.get('/styleguide/templates', (req, res) => {
+    res.send(
+        ect.render('layout', {
+            header: riot.render(views['header']),
+            page: riot.render(views['register']),
+            footer: riot.render(views['footer'])
+        })
+    );
+});
+
 router.get('/', (req, res) => {
     // res.render('layout');
     res.send(

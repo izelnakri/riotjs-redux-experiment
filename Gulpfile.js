@@ -24,6 +24,7 @@ var fs = require('fs'),
     shell = require('gulp-shell'),
     runSequence = require('run-sequence'),
     plumber = require('gulp-plumber'),
+    notifier = require('node-notifier'),
     runMocha = require('gulp-mocha');
     // Server = require('karma').Server;
 
@@ -59,14 +60,12 @@ var notify = function (errorMessage) {
         var message = error.message.replace(__dirname, '.');
         console.log('plumber error occured '.red + errorMessage.blue + '!');
         console.log(message.yellow);
-    };
 
-    // notifier.notify({
-    //     title: 'build failed',
-    //     subtitle: subtitle,
-    //     message: message,
-    //     appIcon: path.join(__dirname, 'alert-icon.png')
-    // });
+        notifier.notify({
+            title: 'build failed',
+            message: message
+        });
+    };
 };
 
 
@@ -254,6 +253,10 @@ gulp.task('js:compile', function() {
             // this is plumber like error reporting
             console.log('ERROR OCCURED ON js:compile'.red);
             console.error(err);
+            notifier.notify({
+                title: 'build failed',
+                message: err
+            });
         })
         .pipe(source('app.js'))
         .pipe(buffer())
@@ -308,15 +311,11 @@ gulp.task('watch', function() {
     );
 
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
-    gulp.watch(COMPONENTS_PATH, ['js:riot:compile']);
-    gulp.watch(PAGES_PATH, ['js:riot:compile']);
-    gulp.watch(CONSTANTS_PATH, ['js:compile']);
-    gulp.watch(ACTIONS_PATH, ['js:compile']);
-    gulp.watch(REDUCERS_PATH, ['js:compile']);
-    gulp.watch(API_PATH, ['js:compile']);
-    gulp.watch(SELECTORS_PATH, ['js:compile']);
-    gulp.watch(COPY_PATH, ['js:copy']);
-    gulp.watch(JS_PLUGINS, ['js:plugins']);
     gulp.watch(JS_VENDORS, ['js:vendors']);
-    gulp.watch('frontend/js/*.js', ['js:compile']);
+    gulp.watch(JS_PLUGINS, ['js:plugins']);
+    gulp.watch(COPY_PATH, ['js:copy']);
+    gulp.watch([
+        COMPONENTS_PATH, PAGES_PATH, CONSTANTS_PATH, ACTIONS_PATH,
+        REDUCERS_PATH, API_PATH, SELECTORS_PATH, 'frontend/js/*.js'
+    ], ['js:compile']);
 });
