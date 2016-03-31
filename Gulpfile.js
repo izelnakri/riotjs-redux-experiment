@@ -78,7 +78,7 @@ gulp.task('scss', function () {
             cacheLocation: 'tmp/sass',
             onError: function (errorMessage) {
                 console.log(errorMessage);
-                return false;
+                // return false;
              }
         }))
         .pipe(cssPrefix())
@@ -260,11 +260,11 @@ gulp.task('js:compile', function() {
         })
         .pipe(source('app.js'))
         .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.init())
         .pipe(uglify()) // Use any gulp plugins you want now
         .pipe(size({ title: 'app.js' }))
-        .pipe(sourcemaps.write('./'))
         .pipe(rev())
+        .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('public/js'))
         .pipe(rev.manifest('config/assets.json', {
             base: 'config',
@@ -276,6 +276,13 @@ gulp.task('js:compile', function() {
         }))
         .pipe(gulp.dest('config'));
     // delete the old manifest
+});
+//
+gulp.task('js:del:sourcemaps', function() {
+    // we are fixing a bug manually
+    fs.readdirSync('./public/js/maps').forEach((fileName) => {
+        fs.unlink('./public/js/maps/' + fileName);
+    });
 });
 
 gulp.task('test:components', function () {
@@ -306,8 +313,8 @@ gulp.task('compile', function () {
 
 gulp.task('watch', function() {
     runSequence(
-        'scss', 'js:copy', 'js:vendor', 'js:plugins', 'js:riot:compile',
-        'js:compile'
+        'scss', 'js:del:sourcemaps', 'js:copy', 'js:vendor', 'js:plugins',
+        'js:riot:compile', 'js:compile'
     );
 
     gulp.watch('frontend/scss/**/*.scss', ['scss']);
