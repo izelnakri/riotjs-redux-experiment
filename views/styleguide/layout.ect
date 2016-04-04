@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" sizes="120x120" href="">
     <link rel="apple-touch-icon" sizes="152x152" href="/"> -->
 
-    <link rel="stylesheet" media="all" href="/css/application.css">
+    <link rel="stylesheet" media="all" href="/css/<%= assets['application.css'] %>">
   </head>
   <body>
     <% content %>
@@ -55,7 +55,7 @@
                 },
                 styleguide: {
                     'format': 'global',
-                    deps: 'jquery'
+                    deps: ['jquery']
                 },
                 app: {
                     deps: [
@@ -67,7 +67,12 @@
 
         System.import('app').then(function(app) {
             console.log('App is loaded');
+            System.import('styleguide').then(function() {
+                console.log('App is loaded');
+            });
         });
+
+
     </script>
   </body>
 </html>

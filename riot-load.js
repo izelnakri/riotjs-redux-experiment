@@ -107,7 +107,7 @@ global.riot.mixin('store', {
             //     self.store = Store.getState();
             //     // performance optimization: find which selector is used
             // });
-            console.log('Store mount is called for a tag: ' + self.root.tagName);
+            // console.log('Store mount is called for a tag: ' + self.root.tagName);
             // self.update();
         });
     }
