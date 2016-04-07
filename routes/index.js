@@ -16,7 +16,18 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-
+    var user = req.body.user;
+    console.log(user);
+    //save it to a cookie session
+    User.create(user).then((user) => {
+        res.status(200).send(
+            ect.render('layout', {
+                header: riot.render(views['header']),
+                page: riot.render(views['register']),
+                footer: riot.render(views['footer'])
+            })
+        );
+    })
 });
 
 router.get('/login', (req, res) => {

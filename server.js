@@ -11,8 +11,9 @@ var express = require('express'),
     app = express(),
     compress = require('compression'),
     morgan = require('morgan'),
+    bodyParser = require('body-parser'),
     ect = require('ect')({
-        watch: true, root: __dirname + '/views', ext : '.ect', assets: assets
+        watch: true, root: __dirname + '/views', ext : '.ect'
     }),
     port = process.env.PORT || 3000;
 
@@ -31,6 +32,8 @@ var html = require('./routes'),
     api = require('./routes/api');
 
 app.use(compress({ threshhold: 31536000 }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use('/', html);
 app.use('/api', api);
 

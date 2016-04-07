@@ -47,7 +47,7 @@ walk(__dirname + '/frontend/js')
             .replace('frontend/js/components/', '').replace('.tag', '');
         console.log(name);
 
-        if (name !== 'validator') {
+        if (name !== 'form' && name !== 'input-password') {
             global.views[name] = require('./' + file);
         }
     });

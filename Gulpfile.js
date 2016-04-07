@@ -321,8 +321,9 @@ gulp.task('watch', function() {
     gulp.watch(JS_VENDORS, ['js:vendors']);
     gulp.watch(JS_PLUGINS, ['js:plugins']);
     gulp.watch(COPY_PATH, ['js:copy']);
+    gulp.watch([COMPONENTS_PATH, PAGES_PATH], ['js:riot:compile']);
     gulp.watch([
-        COMPONENTS_PATH, PAGES_PATH, CONSTANTS_PATH, ACTIONS_PATH,
-        REDUCERS_PATH, API_PATH, SELECTORS_PATH, 'frontend/js/*.js'
+        CONSTANTS_PATH, ACTIONS_PATH, REDUCERS_PATH, API_PATH,
+        SELECTORS_PATH, 'frontend/js/*.js'
     ], ['js:compile']);
 });

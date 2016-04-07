@@ -87,6 +87,14 @@ module.exports = function(sequelize, DataTypes) {
                 //     return sequelize.Promise.reject("Password can't be blank");
                 // }
             },
+            afterCreate: (user, options) => {
+                user = user.generateAuthenticationToken();
+                user.save().then((user) => {
+                    console.log('user saved');
+                    console.log(user);
+                });
+                // user.authentication_token =
+            }
             // beforeUpdate: function(user, options) {
             //
             // }
@@ -105,7 +113,7 @@ module.exports = function(sequelize, DataTypes) {
                  return this;
             },
             generateAuthenticationToken: function() {
-                this.authentication_token = crypto.randomBytes(64);
+                this.authentication_token = crypto.randomBytes(64).toString('hex');
                 return this;
             }
         }

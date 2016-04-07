@@ -9,16 +9,18 @@
                 <div class="well">
                     <h4>Register</h4>
                     <hr />
-                    <form data-is="validator">
+                    <form validate method="post" action="/register">
                         <div class="form-group">
                             <label class="control-label">Email</label>
-                            <input type="email" class="form-control" required />
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                   <button class="btn btn-default" type="button" onclick="{changeInputType}"><i class="fa fa-envelope"></i></button>
+                                </span>
+                                <input name="user[email]" type="email" class="form-control" required />
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                          <label class="control-label">Password</label>
-                          <input type="password" class="form-control" required data-parsley-length="[6, 45]"/>
-                        </div>
+                        <iz-input-password name="user[password]"></iz-input-password> <!-- required attr here -->
 
                         <div class="row">
                             <div class="col-xs-7">
