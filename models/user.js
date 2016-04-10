@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
                     }
 
                     if (val.length > 72) {
-                        throw new Error("Please c hoose a shorter password");
+                        throw new Error("Please choose a shorter password");
                     }
                 }
             }
@@ -89,11 +89,7 @@ module.exports = function(sequelize, DataTypes) {
             },
             afterCreate: (user, options) => {
                 user = user.generateAuthenticationToken();
-                user.save().then((user) => {
-                    console.log('user saved');
-                    console.log(user);
-                });
-                // user.authentication_token =
+                user.save();
             }
             // beforeUpdate: function(user, options) {
             //
@@ -109,8 +105,8 @@ module.exports = function(sequelize, DataTypes) {
                 return bcrypt.compareSync(password, this.password_digest);
             },
             generatePasswordResetToken: function() {
-                 this.password_reset_token = base64url(crypto.randomBytes(48));
-                 return this;
+                this.password_reset_token = base64url(crypto.randomBytes(48));
+                return this;
             },
             generateAuthenticationToken: function() {
                 this.authentication_token = crypto.randomBytes(64).toString('hex');

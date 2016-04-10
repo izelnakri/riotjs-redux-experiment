@@ -4,15 +4,20 @@ import './copy.js';
 import './form-validator';
 
 window.App = {};
-// Parsley.options.namespace = 'parsley-';
+
+riot.visit = function(pageName, opts) {
+    riot.mount('#page', 'page-' + pageName, opts);
+};
+
 App.routesLoad = (function() {
-    riot.visit = function(pageName, opts) {
-        riot.mount('#page', 'page-' + pageName, opts);
-    };
     riot.route('/', function() {
-        riot.visit('index');
-        Store.dispatch(actions.fetchFeedbacksIfNeeded());
         console.log('root route is called');
+        if (Store.getState().user.isLoggedIn) {
+            return riot.visit('user-home');
+        } else {
+            riot.visit('index');
+            Store.dispatch(actions.fetchFeedbacksIfNeeded());
+        }
     });
 
     riot.route('/about', function() {

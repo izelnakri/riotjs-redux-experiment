@@ -1,6 +1,14 @@
 // make the async creators with tunk middleware
 
-export function feedbacks(state = {}, action) {
+var initialState = {
+    count: 0,
+    count_nolimit: 0,
+    items: [],
+    total: 0,
+    ratings: [1, 2, 3, 4, 5]
+};
+
+export function feedbacks(state = initialState, action) {
     switch(action.type) {
         case 'REQUEST_FEEDBACKS':
             return state;

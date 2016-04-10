@@ -5,7 +5,6 @@ export function requestFeedbacks() {
 }
 
 export function fetchFeedbacks() {
-
     return (dispatch) => {
         Store.dispatch(requestFeedbacks());
 

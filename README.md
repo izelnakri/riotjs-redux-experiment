@@ -28,6 +28,7 @@ FOR UNIT TESTS:
 
 TODO:
 - test that store change should update selector
+- form serializer/error-getter from server
 - find the redux-form and redux-localstorage solution without react
 
 some other things I might do in future:

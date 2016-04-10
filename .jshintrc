@@ -9,7 +9,7 @@
   "undef": true,
   "debug": true,
   "node": true,
-  "esversion": 6,
+  "esnext": true,
   "mocha": true,
   "globals": {
     "Raven": true,
@@ -35,6 +35,7 @@
     "Store": true,
     "dispatch": true,
     "Redux": true,
+    "localStorage": true,
     "$": true,
     "_": false,
     "User": true,

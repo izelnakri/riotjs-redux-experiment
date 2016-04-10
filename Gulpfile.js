@@ -247,7 +247,7 @@ gulp.task('js:compile', function() {
         entries: 'frontend/js/app.js',
         debug: true
     });
-    bundler.transform(babelify);
+    bundler.transform(babelify, {presets: ["es2015"]});
     bundler.bundle()
         .on('error', function (err) {
             // this is plumber like error reporting

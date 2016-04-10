@@ -35,7 +35,7 @@ app.use(compress({ threshhold: 31536000 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', html);
-app.use('/api', api);
+app.use('/api/', api);
 
 app.get('*', (req, res) => {
     res.render('layout');

@@ -15,41 +15,8 @@ window.onunhandledrejection = function(evt) {
     });
 };
 
-var initialState = {
-    todosVisibilityFilter: 'SHOW_ALL',
-    todos: [],
-    todo: {},
-    user: {},
-    counter: 0,
-    feedbacks: {
-        count: 0,
-        count_nolimit: 0,
-        items: [],
-        total: 0,
-        ratings: [1, 2, 3, 4, 5]
-    }
-};
-
-
-
-/**
- * Logs all actions and states after they are dispatched.
- */
-// const logger = store => next => action => {
-//     console.group(action.type);
-//     console.info('dispatching', action);
-//     let result = next(action);
-//     console.log('next state', store.getState());
-//     console.groupEnd(action.type);
-//     return result;
-// };
-
 const logger = createLogger();
 
-
-/**
- * Sends crash reports as state is updated and listeners are notified.
- */
 const crashReporter = store => next => action => {
     try {
         return next(action);
@@ -65,26 +32,23 @@ const crashReporter = store => next => action => {
     }
 };
 
-/**
- * Lets you dispatch a function instead of an action.
- * This function will receive `dispatch` and `getState` as arguments.
- *
- * Useful for early exits (conditions over `getState()`), as well
- * as for async control flow (it can `dispatch()` something else).
- *
- * `dispatch` will return the return value of the dispatched function.
- */
-// const thunk = store => next => action =>
-//     typeof action === 'function' ?
-//         action(store.dispatch, store.getState) :
-//         next(action);
+window.storeCache = {
+    get: function() {
+        return JSON.parse(localStorage.getItem('cached-store')) || {};
+    },
+    clear: function() {
+        return localStorage.setItem('cached-store', null);
+    }
+};
+// window.cachedState = JSON.parse(localStorage.getItem('cached-store')) || {};
 
+// there has to be cookie as well.
 
 // You can use all of them! (It doesn’t mean you should.)
 let reducer = Redux.combineReducers(reducers);
 var Store = Redux.createStore(
     reducer,
-    initialState,
+    storeCache.get(),
     Redux.applyMiddleware(
         thunk,
         crashReporter,
@@ -97,6 +61,10 @@ window.createSelector = createSelector;
 window.actions = actions;
 window.reducers = reducers;
 window.selectors = selectors;
+
+Store.subscribe(function() {
+    localStorage.setItem('cached-store', JSON.stringify(Store.getState()));
+});
 
 riot.mixin('store', {
     init: function() {

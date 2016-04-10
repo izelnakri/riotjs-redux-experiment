@@ -6,7 +6,7 @@
 
         self.on('mount', function() {
             var hasValidateAttr = _.isString(self.opts.validate);
-            
+
             if (hasValidateAttr) {
                 $(self.root).parsley({
                     trigger: 'keyup focusout',
@@ -25,5 +25,7 @@
                 });
             }
         });
+
+        // form serializer, dispatch and server-errors return here !!
     </script>
 </form>
