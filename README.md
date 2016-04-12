@@ -27,16 +27,12 @@ FOR UNIT TESTS:
 - ``` sequelize db:migrate --env=test ```
 
 TODO:
+- run migration on deployment
 - test that store change should update selector
-- form serializer/error-getter from server
-- find the redux-form and redux-localstorage solution without react
 
 some other things I might do in future:
 - copy sharing = backend / frontend / multi-lang | write the logic for ruby
-- deployment(probably capistrano), heroku deployment works
-- form prefilling
 - form generation from js
-- tests (unit test on the store, API test)
 - real-time comm. (socket.io)
 - multi-auth (fb/twitter etc) - OAuth
 - styleguide

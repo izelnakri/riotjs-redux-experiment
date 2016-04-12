@@ -30,6 +30,8 @@ router.post('/register', (req, res) => {
     }).catch((error) => {
         var customErrorObject = { errors: { user: {} } };
 
+        console.log(error.errors);
+        // migration isnt there
         _.each(error.errors, function(errorObject) {
             customErrorObject.errors.user[errorObject.path] = " " + errorObject.message;
         });
