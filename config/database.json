@@ -12,6 +12,7 @@
     "dialect": "postgres"
   },
   "production": {
-    "use_env_variable": "RIOTJS_EXAMPLE_DB"
+    "use_env_variable": "RIOTJS_EXAMPLE_DB",
+    "dialect": "postgres"
   }
 }
