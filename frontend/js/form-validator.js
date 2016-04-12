@@ -81,7 +81,65 @@
             return hash;
         }, {}));
     });
+
+    window.ServerErrorService = (function() {
+        return {
+            display: function(errors) {
+                var resources = _.difference(Object.keys(errors), ['general', 'url']);
+                // destructuring for resources resource[attr]
+                if (errors.general) {
+
+                }
+
+                _.each(resources, (resource) => {
+                    _.each(Object.keys(errors[resource]), (key) => {
+                        var input = $('body').find("input[name='" + resource + "[" + key + "]']"),
+                            formGroup = input.closest('.form-group'),
+                            inputGroup = input.parent('.input-group'),
+                            containerLabel;
+
+                        if (formGroup.hasClass('has-success')) {
+                            formGroup.removeClass('has-success');
+                        }
+
+                        formGroup.addClass('has-error has-feedback');
+
+                        if (inputGroup[0]) {
+                            containerLabel = inputGroup.prev('label');
+                        } else {
+                            containerLabel = input.prev('label');
+                        }
+
+                        var serverFeedback = $("<span>" + errors[resource][key] + "</span>");
+                        containerLabel.append(serverFeedback);
+                        input.one('keyup', () => { serverFeedback.remove(); });
+                    });
+                });
+            }
+        };
+    })();
 })();
+
+
+
+
+
+// // server should return the errors always in this format: {errors: resource: { attrs }, general: ''(if any), url: ''}
+// // attrs could be in string or array format
+// errors: {
+//     user: {
+//         email: '', // or array format
+//         password: '' // these will get executed as $(body).find(input[name='user[password]']) then show at the prespecified error location
+//     },
+//     general: '', // errors that shouldn't be attr specific.
+//     url: '/' // which form in the page? => from url: this is the key for $(form[action=url]) lookup for general errors.
+// };
+//
+// ServerErrorService.display(errors);
+
+
+        // server-errors return here !!
+
 
 
 // // Parsley.setLocale('de'); // will be called for locale change on the store

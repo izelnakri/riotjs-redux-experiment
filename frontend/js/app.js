@@ -6,7 +6,9 @@ import './form-validator';
 window.App = {};
 
 riot.visit = function(pageName, opts) {
+    riot.mount('iz-header');
     riot.mount('#page', 'page-' + pageName, opts);
+    riot.mount('iz-footer');
 };
 
 App.routesLoad = (function() {

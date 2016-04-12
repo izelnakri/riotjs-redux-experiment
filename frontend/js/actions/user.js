@@ -1,15 +1,14 @@
 // export function
 
-export function requestUserRegister() {
+export function requestRegisterUser() {
     return {
         type: 'USER_REGISTER_REQUEST'
     };
 }
 
-export function postUserRegister(userData) {
+export function registerUser(userData) {
     return (dispatch) => {
-        Store.dispatch(requestUserRegister());
-        console.log(userData);
+        Store.dispatch(requestRegisterUser());
 
         return fetch('/api/register', {
             method: 'POST',
@@ -22,6 +21,39 @@ export function postUserRegister(userData) {
             riot.visit('user-home');
             return Store.dispatch(receiveUser(json));
         });
+    };
+}
+
+export function loginUser(userData) {
+    return (dispatch) => {
+
+        return fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        }).then(response => {
+            if (response.status === 200) {
+                riot.visit('user-home');
+                return response.json().then((json) => {
+                    return Store.dispatch(receiveUser(json));
+                });
+            } else {
+                console.log('error is');
+                response.json().then((json) => {
+                    ServerErrorService.display(json.errors);
+                });
+            }
+        });
+    };
+}
+
+
+export function logoutUser() {
+    return {
+        type: 'USER_LOGOUT'
     };
 }
 

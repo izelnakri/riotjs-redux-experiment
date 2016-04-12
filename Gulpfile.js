@@ -44,7 +44,8 @@ var JS_VENDORS = [
     ],
     JS_PLUGINS = [
     'frontend/js/vendor/bootstrap.js',
-    'frontend/js/vendor/parsley.js'
+    'frontend/js/vendor/parsley.js',
+    'frontend/js/vendor/jquery-serialize-object.js'
     ],
     COMPONENTS_PATH = 'frontend/js/components/*.tag',
     PAGES_PATH = 'frontend/js/pages/*.tag',

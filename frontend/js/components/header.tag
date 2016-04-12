@@ -15,23 +15,23 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <!-- collapse in toggle -->
         <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" style="border: none;">
-            <ul if={user} class="nav navbar-nav navbar-right">
+            <ul if={store.user.isLoggedIn} class="nav navbar-nav navbar-right">
                 <li>
                   <!-- organization page: -->
                   <a href="/">HOME</a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                     { user.email } <span class="caret"></span>
+                     { store.user.email } <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/settings">Settings</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="/logout">LOGOUT</a></li>
+                        <li><a href="/logout" onclick="{logoutUser}">LOGOUT</a></li>
                     </ul>
                 </li>
             </ul>
-            <ul if={!user} class="nav navbar-nav navbar-right">
+            <ul if={!store.user.isLoggedIn} class="nav navbar-nav navbar-right">
                 <li>
                     <a href="/login">LOGIN</a>
                 </li>
@@ -44,6 +44,13 @@
     </nav>
 
     <script>
+        var self = this;
+
+        self.mixin('store');
+
+        self.on('mount', function() {
+            self.update();
+        });
 
     </script>
 </iz-header>

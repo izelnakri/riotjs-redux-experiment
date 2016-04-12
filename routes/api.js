@@ -36,7 +36,30 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
+    var userParams = req.body.user;
+    User.findOne({ where: { email: userParams.email } }).then((user) => {
+        if (user === null) {
+            return res.status(500).send({
+                errors: {
+                    user: {
+                        email: ' not found'
+                    }
+                }
+            });
+        }
 
+        if (user.authenticate(userParams.password)) {
+            res.status(200).send(user);
+        } else {
+            res.status(500).send({
+                errors: {
+                    user: {
+                        password: ' is incorrect'                        
+                    }
+                }
+            });
+        }
+    });
 });
 
 router.get('/me', (req, res) => {

@@ -23,20 +23,9 @@
     </table>
 
     <script>
-        // REFACTOR the getJSON and better data-structure get/set
         var self = this;
 
         self.mixin('store');
-
-        // self.ratings = [[], [], [], [], []];
-
-        self.on('mount', function () {
-            // _.each(self.store.items, function(item) {
-            //     self.ratings[item.rating - 1].push(item);
-            // });
-
-            self.update();
-        });
 
         self.getFeedbackType = function (ratingValue) {
             switch(ratingValue) {

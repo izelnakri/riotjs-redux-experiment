@@ -1,8 +1,10 @@
-<form>
+<form onsubmit="{dispatchAction}">
     <yield/>
 
     <script>
         var self = this;
+
+        self.mixin('store');
 
         self.on('mount', function() {
             var hasValidateAttr = _.isString(self.opts.validate);
@@ -26,6 +28,14 @@
             }
         });
 
-        // form serializer, dispatch and server-errors return here !!
+        self.dispatchAction = function (event) {
+            if (self.opts.bindaction) { // checks if form tag has bindaction attr: <form bindaction="registerUser">
+                Store.dispatch(
+                    actions[self.opts.bindaction]($(self.root).serializeObject())
+                );
+            } else {
+                return true;
+            }
+        }
     </script>
 </form>

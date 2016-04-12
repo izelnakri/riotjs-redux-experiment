@@ -9,7 +9,6 @@ router.get('/register', (req, res) => {
     res.send(
         ect.render('layout', {
             header: riot.render(views['header']),
-            page: riot.render(views['register']),
             footer: riot.render(views['footer'])
         })
     );
