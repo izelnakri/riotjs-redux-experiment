@@ -2,6 +2,7 @@
   "apps" : [{
     "name"      : "server",
     "script"    : "server.js",
+    "cwd": "/var/www/riotjs-example",
     "env": {
       "COMMON_VARIABLE": "true"
     },
