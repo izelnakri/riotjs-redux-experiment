@@ -12,9 +12,6 @@
     "dialect": "postgres"
   },
   "production": {
-    "password":  process.env.RIOTJS_EXAMPLE_DB_PASSWORD,
-    "database": "riotjs_example",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "use_env_variable": "RIOTJS_EXAMPLE_DB"
   }
 }
