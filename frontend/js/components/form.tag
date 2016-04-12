@@ -25,6 +25,7 @@
                     errorsWrapper: '<span></span>',
                     errorTemplate: '<span></span>'
                 });
+                $(self.root).removeAttr('novalidate');
             }
         });
 

@@ -13,9 +13,7 @@
                         <div class="form-group">
                             <label class="control-label">Email</label>
                             <div class="input-group">
-                                <span class="input-group-btn">
-                                   <button class="btn btn-default" type="button" onclick="{changeInputType}"><i class="fa fa-fw fa-envelope"></i></button>
-                                </span>
+                                <span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
                                 <input name="user[email]" type="email" class="form-control" value="{store.user.email}" required />
                             </div>
                         </div>

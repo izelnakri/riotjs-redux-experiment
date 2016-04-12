@@ -27,11 +27,14 @@ router.post('/register', (req, res) => {
     console.log(user);
     User.create(user).then((user) => {
         res.status(200).send(user);
-        // send the user data as json
     }).catch((error) => {
-        //handle here
-        res.status(500).send(error);
-        // send the data as json
+        var customErrorObject = { errors: { user: {} } };
+
+        _.each(error.errors, function(errorObject) {
+            customErrorObject.errors.user[errorObject.path] = " " + errorObject.message;
+        });
+
+        res.status(500).send(customErrorObject);
     });
 });
 
@@ -54,7 +57,7 @@ router.post('/login', (req, res) => {
             res.status(500).send({
                 errors: {
                     user: {
-                        password: ' is incorrect'                        
+                        password: ' is incorrect'
                     }
                 }
             });

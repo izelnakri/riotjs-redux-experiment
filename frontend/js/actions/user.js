@@ -17,9 +17,18 @@ export function registerUser(userData) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(userData)
-        }).then(response => response.json()).then(json => {
-            riot.visit('user-home');
-            return Store.dispatch(receiveUser(json));
+        }).then(response => {
+            if (response.status === 200) {
+                riot.visit('user-home');
+                return response.json().then((json) => {
+                    return Store.dispatch(receiveUser(json));
+                });
+            } else {
+                console.log('error is');
+                response.json().then((json) => {
+                    ServerErrorService.display(json.errors);
+                });
+            }
         });
     };
 }
