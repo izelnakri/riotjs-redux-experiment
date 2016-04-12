@@ -45,6 +45,7 @@
     "compression": "^1.6.1",
     "ect": "^0.5.9",
     "express": "^4.13.4",
+    "fs-extra": "^0.26.7",
     "gulp-plumber": "^1.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "lodash": "^4.6.1",

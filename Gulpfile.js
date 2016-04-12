@@ -1,6 +1,6 @@
 'use strict';
 
-var fs = require('fs'),
+var fs = require('fs-extra'),
     util = require('util'),
     _ = require('lodash'),
     colors = require('colors'),
@@ -156,23 +156,20 @@ gulp.task('js:copy', ['js:copy:lint'], function() {
         _.extend(lang, JSON.parse(content)); //add the file to lang js object
     });
 
-    fs.writeFile(dist, "window.lang = " + util.inspect(lang, {depth: null}) + ";", (err) => {
-        if (err) { throw err; }
-        
-        return gulp.src(dist)
-                .pipe(size({ title: 'copy.js' }))
-                .pipe(rev())
-                .pipe(gulp.dest('public/js'))
-                .pipe(rev.manifest('config/assets.json', {
-                    base: 'config',
-                    merge: true
-                }))
-                .pipe(revDel({
-                    dest: 'public/js',
-                    oldManifest: 'config/assets.json'
-                }))
-                .pipe(gulp.dest('config'));
-    });
+    fs.outputFileSync(dist, "window.lang = " + util.inspect(lang, {depth: null}) + ";");
+    return gulp.src(dist)
+            .pipe(size({ title: 'copy.js' }))
+            .pipe(rev())
+            .pipe(gulp.dest('public/js'))
+            .pipe(rev.manifest('config/assets.json', {
+                base: 'config',
+                merge: true
+            }))
+            .pipe(revDel({
+                dest: 'public/js',
+                oldManifest: 'config/assets.json'
+            }))
+            .pipe(gulp.dest('config'));
 });
 
 gulp.task('js:components:lint', function () {
