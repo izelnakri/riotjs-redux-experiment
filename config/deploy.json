@@ -17,7 +17,7 @@
       "repo": "https://github.com/izelnakri/riotjs-experiment.git",
       "path" : "/var/www/riotjs-example",
       "pre-deploy-local" : "echo 'This is a local executed command'",
-      "post-deploy" : "npm install && gulp compile && sequelize db:migrate && pm2 startOrRestart ecosystem.json --env production",
+      "post-deploy" : "npm install && gulp compile && sequelize db:migrate --config='config/database.json' && pm2 startOrRestart ecosystem.json --env production",
       "env": {
         "NODE_ENV": "production"
       }
