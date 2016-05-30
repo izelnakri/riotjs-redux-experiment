@@ -250,7 +250,7 @@ gulp.task('js:compile', function() {
     });
     bundler.transform(babelify, {presets: ["es2015"]});
     bundler.bundle()
-        .on('error', function (err) {
+        .on('error', function(err) {
             // this is plumber like error reporting
             console.log('ERROR OCCURED ON js:compile'.red);
             console.error(err);
@@ -286,12 +286,12 @@ gulp.task('js:del:sourcemaps', function() {
     });
 });
 
-gulp.task('test:components', function () {
+gulp.task('test:components', function() {
     return gulp.src('test/frontend/components/*.js', {read: false}) // add mocha config for requires
         .pipe(runMocha({reporter: 'spec', timeout: 15000 }));
 });
 
-gulp.task('test:unit', function () {
+gulp.task('test:unit', function() {
     process.env.NODE_ENV = 'test';
 
     return gulp.src('test/backend:unit/*.js', {read: false})
@@ -305,7 +305,7 @@ gulp.task('test:unit', function () {
 //   }, done).start();
 // });
 
-gulp.task('compile', function () {
+gulp.task('compile', function() {
     return runSequence(
         'scss', 'js:copy', 'js:vendor', 'js:plugins', 'js:riot:compile',
         'js:compile'

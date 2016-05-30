@@ -25,18 +25,6 @@
             "equalto":        "This value should be the same."
         },
         "hello_world": "Hello world!",
-        "user": {
-            "name": "Izel",
-            "full_name": "Nakri",
-            "memberships": [
-                "Illuminati",
-                "Secret Club"
-            ],
-            "profession": {
-                "name": "Programmer",
-                "industry": "IT"
-            }
-        },
         "selected_feedbacks": [
             {
                 "expression": "selected_feedbacks === '3'",

@@ -4,6 +4,7 @@ var crypto = require('crypto'),
     base64url = require('base64url'),
     _ = require('lodash');
 
+
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define('User', {
         email: {

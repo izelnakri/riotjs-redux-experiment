@@ -40,12 +40,6 @@
         // }
     });
 
-    function hasFormFeedback(input) {
-        var formGroup = input.closest('.form-group');
-
-        return formGroup.find('.form-control-feedback')[0];
-    }
-
     function putValidationErrorMessage(input) {
         var message = $("<span class='form-control-feedback fa fa-lg fa-times'></span>");
 

@@ -35,3 +35,12 @@ Object.keys(db).forEach((model) => {
 });
 
 // module.exports = db;
+
+
+db.User.create({
+
+}).then(function(user) {
+
+}).catch(function(error) {
+
+})

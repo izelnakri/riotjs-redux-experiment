@@ -101,7 +101,11 @@ global.riot.mixin('store', {
         global.dispatch = global.Store.dispatch;
 
         self.on('mount', function() {
-            self.store = Store.getState();
+            if (self.opts.store) {
+                self.store = self.opts.store;
+            } else {
+                self.store = Store.getState();                
+            }
 
             // Store.subscribe(function() {
             //     self.store = Store.getState();

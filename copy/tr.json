@@ -24,15 +24,7 @@
             "check":          " should be between %s and %s choices.",
             "equalto":        "This value should be the same."
         },
-        "hello_world": "Hello world!",
-        "user": {
-            "name": "Izel",
-            "full_name": "Nakri",
-            "memberships": {
-                "first": "Illuminati",
-                "second": "Secret Club"
-            }
-        },
+        "hello_world": "Hello world!",  
         "selected_feedbacks": [
             {
                 "expression": "selected_feedbacks === '3'",

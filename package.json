@@ -38,7 +38,7 @@
     "babel-register": "^6.7.2",
     "babelify": "^7.2.0",
     "base64url": "^1.0.6",
-    "bcrypt": "^0.8.5",
+    "bcrypt": "^0.8.6",
     "body-parser": "^1.15.0",
     "browserify": "^13.0.0",
     "colors": "^1.1.2",
